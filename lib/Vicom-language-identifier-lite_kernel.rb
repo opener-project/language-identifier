@@ -1,7 +1,8 @@
 module Opener
    module Kernel
      module Vicom
-       module Language_identifier
+       module LanguageIdentifier
+        module Lite
       	VERSION = "0.0.1"
 
       	class Configuration
@@ -9,8 +10,9 @@ module Opener
         	KERNEL_CORE = CORE_DIR+'/language_detector.pl'
       	end
       end
+      end
     end
   end
 end
 
-KERNEL_CORE=Opener::Kernel::Vicom::Language_identifier::Configuration::KERNEL_CORE
+KERNEL_CORE=Opener::Kernel::Vicom::LanguageIdentifier::Lite::Configuration::KERNEL_CORE

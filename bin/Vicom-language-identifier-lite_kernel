@@ -3,10 +3,4 @@ $:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(_
 
 require 'Vicom-language-identifier-lite_kernel'
 
-if ARGV.size > 0
-  puts `#{KERNEL_CORE} #{ARGV[0]} #{ARGV[1]}`
-else
-  puts `#{KERNEL_CORE}`
-end
-
-
+puts `#{KERNEL_CORE}`
