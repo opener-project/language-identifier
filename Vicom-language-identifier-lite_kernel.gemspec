@@ -2,7 +2,7 @@
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
-require 'Vicom-language_detector-kernel'
+require 'Vicom-language-identifier-lite_kernel'
 
 Gem::Specification.new do |gem|
   gem.name          = "Vicom-language-identifier-lite_kernel"
