@@ -3,7 +3,9 @@ Vicom-language-identifier-lite_kernel
 
 Kernel for language detection lite version.
 
-TODO: Write a gem description
+## Prerequisites
+
+  * Perl: Text/ExtractWords.pm
 
 ## Installation
 
