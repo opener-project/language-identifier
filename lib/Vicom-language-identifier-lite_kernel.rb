@@ -1,18 +1,36 @@
-module Opener
-   module Kernel
-     module Vicom
-       module LanguageIdentifier
-        module Lite
-      	VERSION = "0.0.1"
+require 'tempfile'
 
-      	class Configuration
-        	CORE_DIR    = File.expand_path("../core", File.dirname(__FILE__))
-        	KERNEL_CORE = CORE_DIR+'/language_detector.pl'
-      	end
-      end
+module Opener
+  module Kernel
+    module Vicom
+      module LanguageIdentifier
+        module Lite
+          class ALL 
+            VERSION = "0.0.2"
+
+            attr_reader :kernel, :lib
+
+            def initialize
+              core_dir    = File.expand_path("../core", File.dirname(__FILE__))
+
+              @kernel      = core_dir+'/language_detector.pl'
+              @lib         = core_dir+'/lib/'
+            end
+
+            def command(opts={})
+              arguments = opts[:arguments] || []
+              arguments << "-n" if opts[:test]
+
+              #"cat #{opts[:input]} | java -jar #{kernel} #{lib} #{opts[:input]} #{arguments.join(' ')}"
+  "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]} > #{@output}"
+
+            end
+
+          end
+        end
       end
     end
   end
 end
 
-KERNEL_CORE=Opener::Kernel::Vicom::LanguageIdentifier::Lite::Configuration::KERNEL_CORE
+

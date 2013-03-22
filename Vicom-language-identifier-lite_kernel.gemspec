@@ -6,7 +6,7 @@ require 'Vicom-language-identifier-lite_kernel'
 
 Gem::Specification.new do |gem|
   gem.name          = "Vicom-language-identifier-lite_kernel"
-  gem.version       = Opener::Kernel::Vicom::LanguageIdentifier::Lite::VERSION
+  gem.version       = Opener::Kernel::Vicom::LanguageIdentifier::Lite::ALL:VERSION
   gem.authors       = ["sb-olr","sparkboxx"]
   gem.email         = ["sujit@olery.com", "wilco@olery.com"]
   gem.description   = %q{Language identifier kernel }
@@ -21,5 +21,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cucumber'
+  gem.add_development_dependency 'pry'
 
 end

@@ -3,4 +3,7 @@ $:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(_
 
 require 'Vicom-language-identifier-lite_kernel'
 
-puts `#{KERNEL_CORE}`
+kernel = Opener::Kernel::Vicom::LanguageIdentifier::Lite.new
+command = "#{kernel.command(:input=>ARGV[0], :arguments=>ARGV[1..-1])}"
+
+puts `#{command}`
