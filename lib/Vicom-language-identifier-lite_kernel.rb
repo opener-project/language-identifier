@@ -22,7 +22,8 @@ module Opener
               arguments << "-n" if opts[:test]
 
               #"cat #{opts[:input]} | java -jar #{kernel} #{lib} #{opts[:input]} #{arguments.join(' ')}"
-  "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]} > #{@output}"
+  puts "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
+  "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
 
             end
 
