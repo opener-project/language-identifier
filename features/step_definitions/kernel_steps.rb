@@ -1,3 +1,7 @@
+Given /^an argument as language coverage "(\d)"$/ do |language_coverage|
+  @language_coverage = language_coverage.to_i
+end
+
 Given /^the fixture file "(.*?)"$/ do |filename|
   @input = fixture_file(filename)
   @filename = filename
@@ -6,7 +10,7 @@ end
 Given /^I put them through the kernel$/ do
   tmp_filename = "output_#{rand(1000)}_#{@filename}"
   @output = tmp_file(tmp_filename)
-  `#{kernel.command(:input=>@input, :test=>true)} > #{@output}`
+  `#{kernel.command(:input=>@input, :arguments=>@language_coverage, :test=>true)} > #{@output}`
 end
 
 Then /^the output should match the fixture "(.*?)"$/ do |filename|

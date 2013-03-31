@@ -19,11 +19,9 @@ module Opener
 
             def command(opts={})
               arguments = opts[:arguments] || []
-              arguments << "-n" if opts[:test]
 
-              #"cat #{opts[:input]} | java -jar #{kernel} #{lib} #{opts[:input]} #{arguments.join(' ')}"
-  puts "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
-  "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
+              puts "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
+              "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
 
             end
 
