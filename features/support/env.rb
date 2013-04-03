@@ -8,5 +8,5 @@ def kernel_root
 end
 
 def kernel
-  Opener::Kernel::Vicom::LanguageIdentifier::Lite.new
+  Opener::Kernel::Vicom::LanguageIdentifier::Lite::ALL.new
 end

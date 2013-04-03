@@ -20,8 +20,8 @@ module Opener
             def command(opts={})
               arguments = opts[:arguments] || []
 
-              puts "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
-              "perl -I #{lib} #{kernel} #{arguments.join(' ')} #{opts[:input]}"
+              #puts "perl -I #{lib} #{kernel} #{arguments} #{opts[:input]}"
+              "perl -I #{lib} #{kernel} #{arguments} #{opts[:input]}"
 
             end
 
