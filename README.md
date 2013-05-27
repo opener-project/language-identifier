@@ -12,7 +12,7 @@ Kernel for language detection lite version.
 
 Add this line to your application's Gemfile:
 
-    gem 'Vicom-language-identifier-lite_kernel', :git=>"git@github.com/opener-project/Vicom-language-identifier-lite_kernel.git"
+    gem 'Vicom-language-identifier-lite_kernel', :git=>"git@github.com:opener-project/Vicom-language-identifier-lite_kernel.git"
 
 And then execute:
 
@@ -28,7 +28,7 @@ Once installed as a gem you can access the gem from anywhere:
 
 Vicomtech-language-identifier-lite_kernel needs 2 arguments:
 
-1. Language support. With '0' suports:
+1. Language support. With '0' supports:
 
 	English (en)
 	French (fr)
