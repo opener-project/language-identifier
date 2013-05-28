@@ -26,35 +26,21 @@ Or install it yourself as:
 
 Once installed as a gem you can access the gem from anywhere:
 
-Vicomtech-language-identifier-lite_kernel needs 2 arguments:
+This aplication reads a text from standard input in order to identify language.
 
-1. Language support. With '0' supports:
+Usage: Vicomtech-language-identifier-lite_kernel [OPTION]
 
-	English (en)
-	French (fr)
-	Spanish (es)
-	Italian (it)
-	German (de)
-	Dutch (nl)
+-d,             (optional) extends language detection,
+                without this flag application detects:
+                english (en), french (fr), spanish (es), italian (it),
+                german (de) and dutch (nl).
+                with this flag application detects:
+                english (en), french (fr), spanish (es), portugese (pt),
+                italian (it), german (de), dutch (nl), swedish (sv),
+                norwegian (no) and danish (da).
+--help,         outputs aplication help.
 
-   With '1' suports:
-
-	English (en)
-	French (fr)
-	Spanish (es)
-	Portugese (pt)
-	Italian (it)
-	German (de)
-	Dutch (nl)
-	Swedish (sv)
-	Norwegian (no)
-	Danish (da)
-
-2. The file path whose language will be guessed.
-
-For example:
-
-$ Vicom-tokenizer-lite_FR 0 english.txt
+Example: cat english_text.txt | Vicomtech-language-identifier-lite_kernel -d
 
 Will output:
 

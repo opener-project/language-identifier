@@ -4,7 +4,7 @@ Feature: Using a file and an argument as input and other file as an output
   Using a file as an input
   Using a file as an output
 
-  Scenario Outline: detect input file's language, if language coverage is "0" the aplication detects:
+  Scenario Outline: detect input file's language, without language coverage flag the aplication detects:
 
 	English (en)
 	French (fr)
@@ -13,7 +13,7 @@ Feature: Using a file and an argument as input and other file as an output
 	German (de)
 	Dutch (nl)
 
-  If language coverage is "1" it detects:
+  With language coverage flag it detects:
 
 	English (en)
 	French (fr)
@@ -26,25 +26,25 @@ Feature: Using a file and an argument as input and other file as an output
 	Norwegian (no)
 	Danish (da)
 
-    Given an argument as language coverage "<language_coverage>"
+    Given a parameter as language coverage "<language_coverage>"
     Given the fixture file "<input_file>"
     And I put them through the kernel
     Then the output should match the fixture "<output_file>"
   Examples:
     | language_coverage	| input_file	| output_file		|
-    | 0                 | english.txt	| english_result.txt	|
-    | 0                 | spanish.txt	| spanish_result.txt	|
-    | 0                 | french.txt	| french_result.txt	|
-    | 0                 | german.txt	| german_result.txt	|
-    | 0                 | italian.txt	| italian_result.txt	|
-    | 0                 | dutch.txt	| dutch_result.txt	|
-    | 1                 | english.txt	| english_result.txt	|
-    | 1                 | spanish.txt	| spanish_result.txt	|
-    | 1                 | french.txt	| french_result.txt	|
-    | 1                 | german.txt	| german_result.txt	|
-    | 1                 | italian.txt	| italian_result.txt	|
-    | 1                 | dutch.txt	| dutch_result.txt	|
-    | 1                 | danish.txt	| danish_result.txt	|
-    | 1                 | norwegian.txt	| norwegian_result.txt	|
-    | 1                 | portugese.txt	| portugese_result.txt	|
-    | 1                 | swedish.txt	| swedish_result.txt	|
+    |			| english.txt	| english_result.txt	|
+    |			| spanish.txt	| spanish_result.txt	|
+    |			| french.txt	| french_result.txt	|
+    |			| german.txt	| german_result.txt	|
+    |			| italian.txt	| italian_result.txt	|
+    |			| dutch.txt	| dutch_result.txt	|
+    | -d		| english.txt	| english_result.txt	|
+    | -d		| spanish.txt	| spanish_result.txt	|
+    | -d		| french.txt	| french_result.txt	|
+    | -d		| german.txt	| german_result.txt	|
+    | -d		| italian.txt	| italian_result.txt	|
+    | -d		| dutch.txt	| dutch_result.txt	|
+    | -d		| danish.txt	| danish_result.txt	|
+    | -d		| norwegian.txt	| norwegian_result.txt	|
+    | -d		| portugese.txt	| portugese_result.txt	|
+    | -d		| swedish.txt	| swedish_result.txt	|
