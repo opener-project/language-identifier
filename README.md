@@ -30,15 +30,15 @@ This aplication reads a text from standard input in order to identify language.
 
 Usage: Vicomtech-language-identifier-lite_kernel [OPTION]
 
--d,		(optional) extends language detection,
-		without this flag application detects:
-		english (en), french (fr), spanish (es), italian (it),
-		german (de) and dutch (nl).
-		with this flag application detects:
-		english (en), french (fr), spanish (es), portugese (pt),
-		italian (it), german (de), dutch (nl), swedish (sv),
-		norwegian (no) and danish (da).
---help,		outputs aplication help.
+-d,	(optional) extends language detection,
+	without this flag application detects:
+	english (en), french (fr), spanish (es), italian (it),
+	german (de) and dutch (nl).
+	with this flag application detects:
+	english (en), french (fr), spanish (es), portugese (pt),
+	italian (it), german (de), dutch (nl), swedish (sv),
+	norwegian (no) and danish (da).
+--help,	outputs aplication help.
 
 Example: cat english_text.txt | Vicomtech-language-identifier-lite_kernel -d
 
