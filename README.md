@@ -9,17 +9,20 @@ Kernel for language detection lite version.
 
 ## Installation
 
+_Note: During gem installation a perl module will be installed and compiled
+locally._
+
 Add this line to your application's Gemfile:
 
-    gem 'Vicom-language-identifier-lite_kernel', :git=>"git@github.com:opener-project/Vicom-language-identifier-lite_kernel.git"
+    gem 'opener-language-identifier', :git=>"git@github.com:opener-project/language-identifier.git"
 
 And then execute:
 
     $ bundle install
 
-Or install it yourself as:
+Or install it as a standalone gem:
 
-    $ gem specific_install Vicom-language-identifier-lite_kernel -l https://github.com/opener-project/Vicom-language-identifier-lite_kernel.git
+    $ gem specific_install opener-language-identifier -l https://github.com/opener-project/language-identifier.git
 
 ## Usage
 
@@ -27,7 +30,7 @@ Once installed as a gem you can access the gem from anywhere:
 
 This aplication reads a text from standard input in order to identify language.
 
-Usage: Vicomtech-language-identifier-lite_kernel [OPTION]
+Usage: language-identifier [OPTION]
 
 -d,	(optional) extends language detection,
 
@@ -42,12 +45,11 @@ Usage: Vicomtech-language-identifier-lite_kernel [OPTION]
 
 --help,	outputs aplication help.
 
-Example: cat english_text.txt | Vicomtech-language-identifier-lite_kernel -d
+Example: cat english_text.txt | language-identifier -d
 
 Will output:
 
 en
-
 
 ## Contributing
 
