@@ -1,9 +1,5 @@
 #!/usr/bin/env ruby
-$:.unshift(File.dirname(__FILE__) + '/../lib') unless $:.include?(File.dirname(__FILE__) + '/../lib')
+require_relative '../lib/opener/tokenizer/base'
 
-require 'Vicom-language-identifier-lite_kernel'
-
-kernel = Opener::Kernel::Vicom::LanguageIdentifier::Lite::ALL.new
-command = "#{kernel.command(:input=>ARGV[0], :arguments=>ARGV[1])}"
-
-puts `#{command}`
+kernel = Opener::LanguageDetector.new
+puts kernel.run

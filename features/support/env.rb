@@ -1,4 +1,4 @@
-Dir[File.dirname(__FILE__) + '/../../lib/*.rb'].each {|file| require file }
+require_relative '../../lib/opener/language_identifier'
 require 'rspec/expectations'
 require 'tempfile'
 require 'pry'
@@ -8,5 +8,5 @@ def kernel_root
 end
 
 def kernel
-  Opener::Kernel::Vicom::LanguageIdentifier::Lite::ALL.new
+  Opener::LanguageIdentifier.new
 end

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    Vicom-language-identifier-lite_kernel (0.0.2)
+    opener-language-identifier (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -38,7 +38,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  Vicom-language-identifier-lite_kernel!
   cucumber
+  opener-language-identifier!
   pry
   rspec

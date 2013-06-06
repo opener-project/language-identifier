@@ -5,10 +5,9 @@ Kernel for language detection lite version.
 
 ## Prerequisites
 
-  * Perl: Text/ExtractWords.pm, please refer to https://github.com/gitpan/Text-ExtractWords and read the readme there so see how to install there.
+  * Perl installed
 
 ## Installation
-
 
 Add this line to your application's Gemfile:
 
