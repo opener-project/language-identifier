@@ -1,5 +1,5 @@
 ###########################################
-# Text::Language::Guess 
+# Text::Language::Guess
 # 2005, Mike Schilli <cpan@perlmeister.com>
 ###########################################
 
@@ -65,15 +65,15 @@ sub scores_string {
         !defined $data or !length $data;
 
     words_list(\@words, $data, {});
-    
+
     for my $word (@words) {
         my $langs = $self->{stopmap}->{$word};
-    
+
         if(! defined $langs) {
             DEBUG "$word doesn't match any language";
             next;
         }
-    
+
         for my $lang (@$langs) {
             DEBUG "Scoring for $lang";
             $scores{$lang}++;
@@ -82,12 +82,12 @@ sub scores_string {
 
     return \%scores;
 }
-    
+
 ###########################################
 sub language_guess {
 ###########################################
     my($self, $file) = @_;
-    
+
     return $self->language_guess_string(slurp($file));
 }
 
@@ -100,7 +100,7 @@ sub language_guess_string {
 
     my $best_lang;
     my $max_score;
-    
+
     for my $lang (keys %$scores) {
         if(!defined $max_score or
             $max_score < $scores->{$lang}) {
@@ -108,7 +108,7 @@ sub language_guess_string {
             $max_score = $scores->{$lang};
         }
     }
-    
+
     return $best_lang;
 }
 
@@ -122,7 +122,7 @@ sub stopwords {
     my $stopmap = {};
 
     for my $lang (@{$self->{languages}}) {
-        
+
         DEBUG "Loading language $lang";
 
         my $stopwords = Lingua::StopWords::getStopWords($lang);
@@ -135,7 +135,7 @@ sub stopwords {
 
     return $stopmap;
 }
-    
+
 ###########################################
 sub languages {
 ###########################################
@@ -144,7 +144,7 @@ sub languages {
 
     for my $dir (@INC) {
         if(-f File::Spec->catfile($dir, "Lingua/StopWords.pm")) {
-            return [map { s/\.pm$//; lc basename($_); } 
+            return [map { s/\.pm$//; lc basename($_); }
                         <$dir/Lingua/StopWords/*.pm>];
         }
     }
@@ -188,8 +188,8 @@ Text::Language::Guess - Trained module to guess a document's language
 =head1 DESCRIPTION
 
 Text::Language::Guess guesses a document's language. Its implementation
-is simple: Using C<Text::ExtractWords> and C<Lingua::StopWords> from 
-CPAN, it determines how many of the known stopwords the document 
+is simple: Using C<Text::ExtractWords> and C<Lingua::StopWords> from
+CPAN, it determines how many of the known stopwords the document
 contains for each language supported by C<Lingua::StopWords>.
 
 Each word in the document recognized as stopword
@@ -241,7 +241,7 @@ Norwegian (no)
 
 =item *
 
-Danish (da) 
+Danish (da)
 
 =back
 
@@ -268,7 +268,7 @@ languages:
 
 =item C<language_guess($textfile)>
 
-Reads in a text file, extracts all words, scores them 
+Reads in a text file, extracts all words, scores them
 using the stopword maps and returns a single two-letter
 string indicating the language the document is most likely
 written in.
