@@ -7,3 +7,5 @@ Gemfile.lock
 .rvmrc
 *.so
 tmp/*
+core/lib/built/*
+!core/lib/built/.gitkeep

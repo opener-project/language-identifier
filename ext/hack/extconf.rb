@@ -1,24 +1,19 @@
 require 'mkmf'
-require 'fileutils'
+require_relative 'support'
 
 find_executable('perl')
 find_executable('make')
 
-ext       = File.expand_path('../../../core/ext', __FILE__)
-perl_lib  = File.expand_path('../../../core/lib', __FILE__)
-extension = RbConfig::CONFIG['DLEXT']
-sanity    = File.join(Dir.pwd, 'hack.' + extension)
+# RubyGems won't install the extension if there's no corresponding file for it
+# (e.g. hack.so for Linux).
+sanity = File.join(Dir.pwd, 'hack.' + RbConfig::CONFIG['DLEXT'])
 
 FileUtils.touch(sanity)
 
-Dir.glob(File.join(ext, '*')).each do |dir|
-  Dir.chdir(dir) do
-    puts "Building Perl for #{File.basename(dir)}"
-
-    system("perl Makefile.PL PREFIX=#{perl_lib} LIB=#{perl_lib}")
-    system("make")
-    system("make install")
-  end
+perl_extensions.each do |directory|
+  compile_perl_extension(directory)
 end
 
+# Without this RubyGems assumes the Makefile was not generated and will abort
+# the process of building/installing the Gem.
 $makefile_created = true

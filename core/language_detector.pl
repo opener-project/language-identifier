@@ -1,9 +1,12 @@
 #!/usr/bin/perl
 use warnings;
 use strict;
-use lib "../lib/";
-use lib "./lib/";
-use lib "./core/lib/";
+use FindBin;
+
+# Used to load the modules from the directory this script is located in
+# (instead of the current working directory).
+use lib "$FindBin::Bin/lib";
+use lib "$FindBin::Bin/lib/built";
 
 use Text::Language::Guess ;
 
@@ -43,7 +46,7 @@ if ($HELP == 1) {
 	} else {
 		print "Error: unknown language.";
 	}
-	
+
 }
 
 
