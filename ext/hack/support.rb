@@ -15,11 +15,11 @@ def compile_perl_extension(directory, prefix = PERL_LIB)
   Dir.chdir(directory) do
     puts "Building Perl module #{File.basename(directory)}"
 
-    sh "perl Makefile.PL PREFIX=#{prefix} LIB=#{prefix}"
-    sh 'make'
-    sh 'make install'
-    sh 'make clean'
-    sh 'rm Makefile.old'
+    system "perl Makefile.PL PREFIX=#{prefix} LIB=#{prefix}"
+    system 'make'
+    system 'make install'
+    system 'make clean'
+    system 'rm Makefile.old'
   end
 end
 

@@ -7,3 +7,10 @@ task :compile do
     compile_perl_extension(directory)
   end
 end
+
+desc 'Runs the tests'
+task :test => :compile do
+  sh 'cucumber features'
+end
+
+task :default => :test
