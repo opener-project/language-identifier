@@ -1,8 +1,8 @@
 # Directory that contains all the Perl modules that have to be compiled.
 PERL_EXT = File.expand_path('../../../core/ext', __FILE__)
 
-# Directory containing all the installed Perl modules.
-PERL_LIB = File.expand_path('../../../core/lib/built', __FILE__)
+# Directory to store the built files in.
+PERL_PREFIX = File.expand_path('../../../core/lib/built', __FILE__)
 
 ##
 # Compiles and installs a Perl module.
@@ -11,7 +11,7 @@ PERL_LIB = File.expand_path('../../../core/lib/built', __FILE__)
 # @param [String] prefix The path to use for the installation directory and
 #  library path.
 #
-def compile_perl_extension(directory, prefix = PERL_LIB)
+def compile_perl_extension(directory, prefix = PERL_PREFIX)
   Dir.chdir(directory) do
     puts "Building Perl module #{File.basename(directory)}"
 
