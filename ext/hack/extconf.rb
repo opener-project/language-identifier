@@ -6,7 +6,7 @@ find_executable('make')
 
 vendor   = File.expand_path('../../../core/vendor', __FILE__)
 perl_lib = File.expand_path('../../../core/lib', __FILE__)
-sanity   = File.join(Dir.pwd, 'language_identifier.so')
+sanity   = File.join(Dir.pwd, 'hack.so')
 
 FileUtils.touch(sanity)
 

@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Language identifier kernel }
   gem.summary       = %q{Use this gem in a component}
   gem.homepage      = "http://opener-project.github.com/"
-  gem.extensions    = ['ext/language_identifier/extconf.rb']
+  gem.extensions    = ['ext/hack/extconf.rb']
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
