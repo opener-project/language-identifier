@@ -6,4 +6,4 @@ Gemfile.lock
 *~
 .rvmrc
 *.so
-tmp
+tmp/*
