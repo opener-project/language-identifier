@@ -4,9 +4,10 @@ require 'fileutils'
 find_executable('perl')
 find_executable('make')
 
-vendor   = File.expand_path('../../../core/vendor', __FILE__)
-perl_lib = File.expand_path('../../../core/lib', __FILE__)
-sanity   = File.join(Dir.pwd, 'hack.so')
+vendor    = File.expand_path('../../../core/vendor', __FILE__)
+perl_lib  = File.expand_path('../../../core/lib', __FILE__)
+extension = RbConfig::CONFIG['DLEXT']
+sanity    = File.join(Dir.pwd, 'hack.' + extension)
 
 FileUtils.touch(sanity)
 
