@@ -1,4 +1,3 @@
-tmp/*
 .DS_Store
 .idea/
 pkg/
@@ -7,3 +6,4 @@ Gemfile.lock
 *~
 .rvmrc
 *.so
+tmp
