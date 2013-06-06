@@ -2,6 +2,7 @@ require 'mkmf'
 require 'fileutils'
 
 find_executable('perl')
+find_executable('make')
 
 vendor   = File.expand_path('../../../core/vendor', __FILE__)
 perl_lib = File.expand_path('../../../core/lib', __FILE__)
