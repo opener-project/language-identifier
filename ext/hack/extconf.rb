@@ -4,14 +4,14 @@ require 'fileutils'
 find_executable('perl')
 find_executable('make')
 
-vendor    = File.expand_path('../../../core/vendor', __FILE__)
+ext       = File.expand_path('../../../core/ext', __FILE__)
 perl_lib  = File.expand_path('../../../core/lib', __FILE__)
 extension = RbConfig::CONFIG['DLEXT']
 sanity    = File.join(Dir.pwd, 'hack.' + extension)
 
 FileUtils.touch(sanity)
 
-Dir.glob(File.join(vendor, '*')).each do |dir|
+Dir.glob(File.join(ext, '*')).each do |dir|
   Dir.chdir(dir) do
     puts "Building Perl for #{File.basename(dir)}"
 
