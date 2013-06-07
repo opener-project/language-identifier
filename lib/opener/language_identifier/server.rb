@@ -2,8 +2,6 @@ require 'sinatra'
 
 module Opener
   class LanguageIdentifier
-    class ServerHooks
-    end
     class Server < Sinatra::Base
 
       ##
