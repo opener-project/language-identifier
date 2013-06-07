@@ -1,10 +1,18 @@
-require 'sinatra'
+require 'sinatra/base'
 
 module Opener
   class LanguageIdentifier
-    class ServerHooks
-    end
     class Server < Sinatra::Base
+      configure do
+        enable :logging
+      end
+
+      ##
+      # Provides a page where you see a textfield and you can post stuff
+      #
+      get '/' do
+        erb :index
+      end
 
       ##
       # Arguments:
@@ -15,28 +23,37 @@ module Opener
       # extended --> if true, pass the -d option to the language-identifier
       #
       post '/' do
-        text = params.delete("text")
-        identifier = Opener::LanguageIdentifier.new(options_from_params)
+        output = identify_text(params[:text])
 
-        output, error, process = identifier.run(text)
         body output
       end
 
       ##
-      # Provides a page where you see a textfield and you can post stuff
+      # @param [String] text The text to identify.
+      # @return [String]
       #
-      get '/' do
-        erb :index
+      def identify_text(text)
+        identifier = LanguageIdentifier.new(options_from_params)
+        output, *_ = identifier.run(text)
+
+        return output
       end
 
+      ##
+      # Returns a Hash containing various GET/POST parameters extracted from
+      # the `params` Hash.
+      #
+      # @return [Hash]
+      #
       def options_from_params
         options = {}
-        options[:kaf]      = params[:kaf]
-        options[:extended] = params[:extended]
-        options[:callback] = params[:callback]
+
+        [:kaf, :extended, :callback].each do |key|
+          options[key] = params[key]
+        end
+
         return options
       end
     end
   end
 end
-
