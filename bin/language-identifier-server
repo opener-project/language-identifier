@@ -1,3 +1,8 @@
 #!/usr/bin/env ruby
+
 require_relative '../lib/opener/language_identifier/server'
-Opener::LanguageIdentifier::Server.run!
+
+server               = Rack::Server.new
+server.options[:app] = Opener::LanguageIdentifier::Server
+
+server.start
