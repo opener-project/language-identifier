@@ -1,20 +1,42 @@
-Vicom-language-identifier-lite_kernel
-=====================================
+# Language Identifier
 
-Kernel for language detection lite version.
+The language identifier takes raw text and returns the language of said text.
 
-## Prerequisites
+## Requirements
 
-  * Perl installed
+* Perl 5
+* Ruby 1.9.2 or newer
+* Make
+
+## Compiling Perl
+
+The Gem comes with various Perl dependencies that are vendored, including one C
+extension. This extension is compiled upon Gem installation or when running the
+following command:
+
+    rake compile
+
+## Hacking
+
+First install the required dependencies:
+
+    bundle install
+
+Then run the tests to see if everything is working:
+
+    rake
+
+This will compile the Perl code and run the tests. If you want to recompile the
+Perl code without running tests at some point you can run the following:
+
+    rake compile
 
 ## Installation
 
-_Note: During gem installation a perl module will be installed and compiled
-locally._
-
 Add this line to your application's Gemfile:
 
-    gem 'opener-language-identifier', :git=>"git@github.com:opener-project/language-identifier.git"
+    gem 'opener-language-identifier',
+        :git=>"git@github.com:opener-project/language-identifier.git"
 
 And then execute:
 
@@ -22,34 +44,22 @@ And then execute:
 
 Or install it as a standalone gem:
 
-    $ gem specific_install opener-language-identifier -l https://github.com/opener-project/language-identifier.git
+    $ gem specific_install opener-language-identifier \
+        -l https://github.com/opener-project/language-identifier.git
 
 ## Usage
 
-Once installed as a gem you can access the gem from anywhere:
+Detecting a language:
 
-This aplication reads a text from standard input in order to identify language.
+    echo "This is English text" | language-identifier
 
-Usage: language-identifier [OPTION]
+Using extended language detection:
 
--d,	(optional) extends language detection,
+    echo "Dit is een Nederlandse text" | language-identifier -d
 
-	without this flag application detects:
-	english (en), french (fr), spanish (es), italian (it),
-	german (de) and dutch (nl).
+For more information about the usage and available options run the following:
 
-	with this flag application detects:
-	english (en), french (fr), spanish (es), portugese (pt),
-	italian (it), german (de), dutch (nl), swedish (sv),
-	norwegian (no) and danish (da).
-
---help,	outputs aplication help.
-
-Example: cat english_text.txt | language-identifier -d
-
-Will output:
-
-en
+    language-identifier --help
 
 ## Contributing
 
