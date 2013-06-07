@@ -10,7 +10,7 @@ end
 Given /^I put them through the kernel$/ do
   tmp_filename = "output_#{rand(1000)}_#{@filename}"
   @output = tmp_file(tmp_filename)
-  `cat #{@input} | #{kernel.command([@language_coverage])} > #{@output}`
+  `cat #{@input} | #{kernel.command} #{@language_coverage} > #{@output}`
 end
 
 Then /^the output should match the fixture "(.*?)"$/ do |filename|
