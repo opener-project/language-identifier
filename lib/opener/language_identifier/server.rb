@@ -2,6 +2,9 @@ require 'sinatra/base'
 
 module Opener
   class LanguageIdentifier
+    ##
+    # A basic language identification server powered by Sinatra.
+    #
     class Server < Sinatra::Base
       configure do
         enable :logging
@@ -15,12 +18,15 @@ module Opener
       end
 
       ##
-      # Arguments:
+      # Identifies a given text.
       #
-      # input --> text
-      # callback --> post to this url when you're done, return a 202 immediately
-      # KAF --> if true, output KAF
-      # extended --> if true, pass the -d option to the language-identifier
+      # @param [Hash] params The POST parameters.
+      #
+      # @option params [String] :text The text to identify.
+      # @option params [TrueClass|FalseClass] :kaf Whether or not to use KAF
+      #  output.
+      # @option params [TrueClass|FalseClass] :extended Whether or not to use
+      #  extended language detection.
       #
       post '/' do
         output = identify_text(params[:text])
@@ -54,6 +60,6 @@ module Opener
 
         return options
       end
-    end
-  end
-end
+    end # Server
+  end # LanguageIdentifier
+end # Opener
