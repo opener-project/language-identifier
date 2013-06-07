@@ -3,6 +3,7 @@ require 'optparse'
 module Opener
   class LanguageIdentifier
     class OptionParser
+
       def self.parse(options_array)
         options = {}
         ::OptionParser.new do |opts|
@@ -13,7 +14,7 @@ module Opener
           end
 
           opts.on("-k", "--kaf", "Output a KAF file with the xml:lang attribute set") do |v|
-            options[:KAF] = v
+            options[:kaf] = v
           end
 
           opts.separator "\n"

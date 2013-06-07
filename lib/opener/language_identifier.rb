@@ -5,28 +5,38 @@ require 'open3'
 
 module Opener
   class LanguageIdentifier
-    attr_reader :kernel, :lib
+    attr_reader :kernel, :lib, :args
+    attr_accessor :options
 
-    def command(opts={})
-      "perl -I #{lib} #{kernel} #{opts.join(' ')}"
+    def initialize(opts={})
+      @args    = opts.delete(:args) || []
+      @options = opts
     end
 
-    def run(opts=ARGV)
-      options = OptionParser.parse(opts.dup)
-      if !options[:KAF]
-        return `#{command(opts)}`
-      else
-        return kaf_output(opts)
-      end
+    def command
+      "perl -I #{lib} #{kernel} #{args.join(' ')}"
+    end
+
+    def identify(text)
+      options[:kaf] ? kaf_output(text) : default_output(text)
+    end
+
+    alias :run :identify
+
+    def options
+      OptionParser.parse(args.dup).merge(@options)
     end
 
     protected
 
-    def kaf_output(opts)
-      text = STDIN.read
-      output, error, process = Open3.capture3(command(opts), :stdin_data=>text)
-      STDOUT.puts KafBuilder.new(text, output).build
-      STDERR.puts e if !error.empty?
+    def default_output(text)
+      Open3.capture3(command, :stdin_data=>text)
+    end
+
+    def kaf_output(text)
+      output, error, process = default_output(text)
+      output = KafBuilder.new(text, output).build
+      [output, error, process]
     end
 
     def core_dir

@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 require_relative '../lib/opener/language_identifier'
 
-kernel = Opener::LanguageIdentifier.new
-puts kernel.run
+kernel = Opener::LanguageIdentifier.new(:args=>ARGV)
+
+output, error, process = kernel.run(STDIN.read)
+STDOUT.puts output
+STDERR.puts error if !error.empty?
+abort error unless process.success?
