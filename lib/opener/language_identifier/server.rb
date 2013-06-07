@@ -1,23 +1,13 @@
-require 'sinatra'
+require 'sinatra/base'
 
 module Opener
   class LanguageIdentifier
+    ##
+    # A basic language identification server powered by Sinatra.
+    #
     class Server < Sinatra::Base
-
-      ##
-      # Arguments:
-      #
-      # input --> text
-      # callback --> post to this url when you're done, return a 202 immediately
-      # KAF --> if true, output KAF
-      # extended --> if true, pass the -d option to the language-identifier
-      #
-      post '/' do
-        text = params.delete("text")
-        identifier = Opener::LanguageIdentifier.new(options_from_params)
-
-        output, error, process = identifier.run(text)
-        body output
+      configure do
+        enable :logging
       end
 
       ##
@@ -27,14 +17,49 @@ module Opener
         erb :index
       end
 
+      ##
+      # Identifies a given text.
+      #
+      # @param [Hash] params The POST parameters.
+      #
+      # @option params [String] :text The text to identify.
+      # @option params [TrueClass|FalseClass] :kaf Whether or not to use KAF
+      #  output.
+      # @option params [TrueClass|FalseClass] :extended Whether or not to use
+      #  extended language detection.
+      #
+      post '/' do
+        output = identify_text(params[:text])
+
+        body output
+      end
+
+      ##
+      # @param [String] text The text to identify.
+      # @return [String]
+      #
+      def identify_text(text)
+        identifier = LanguageIdentifier.new(options_from_params)
+        output, *_ = identifier.run(text)
+
+        return output
+      end
+
+      ##
+      # Returns a Hash containing various GET/POST parameters extracted from
+      # the `params` Hash.
+      #
+      # @return [Hash]
+      #
       def options_from_params
         options = {}
-        options[:kaf]      = params[:kaf]
-        options[:extended] = params[:extended]
-        options[:callback] = params[:callback]
+
+        [:kaf, :extended, :callback].each do |key|
+          options[key] = params[key]
+        end
+
         return options
       end
-    end
-  end
-end
-
+    end # Server
+  end # LanguageIdentifier
+end # Opener
