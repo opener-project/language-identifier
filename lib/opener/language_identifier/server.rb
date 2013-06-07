@@ -14,7 +14,7 @@ module Opener
       # KAF --> if true, output KAF
       # extended --> if true, pass the -d option to the language-identifier
       #
-      get '/' do
+      post '/' do
         text = params.delete("text")
         identifier = Opener::LanguageIdentifier.new(options_from_params)
 
@@ -25,13 +25,8 @@ module Opener
       ##
       # Provides a page where you see a textfield and you can post stuff
       #
-      #get '/' do
-
-      #end
-
-      ##
-      # Show a page with the documentation of the webservice
-      get '/docs' do
+      get '/' do
+        erb :index
       end
 
       def options_from_params
