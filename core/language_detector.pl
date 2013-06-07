@@ -37,9 +37,9 @@ if ($HELP == 1) {
 	my $guesser;
 #print "support: $SUPPORT\n";
 	if ($SUPPORT == 1) {
-		$guesser = Text::Language::Guess->new();
+    $guesser = Text::Language::Guess->new();
 	} else {
-		$guesser = Text::Language::Guess->new(languages => ['en', 'fr', 'es', 'it', 'de', 'nl']);
+    $guesser = Text::Language::Guess->new(languages => ['en', 'fr', 'es', 'it', 'de', 'nl']);
 	}
         my $lang = $guesser->language_guess_string($text);
 	if ($lang) {
@@ -50,11 +50,16 @@ if ($HELP == 1) {
 
 }
 
-
-
+##
+# NOTE: the wrapper around this script actually hijacks the help output, which
+# meanse that the message below never get's displayed.
+#
+# In orde to change the help output check the file:
+# lib/opener/language-identifier/option_parser.rb
+#
 sub displayHelp {
   print STDERR "\nThis aplication reads a text from standard input in order to identify language.\n\n";
-  print STDERR "Usage: Vicomtech-language-identifier-lite_kernel [OPTION]\n\n";
+  print STDERR "Usage: cat english.txt | language-identifier\n\n";
   print STDERR "-d,             (optional) extends language detection,\n";
   print STDERR "                without this flag application detects:\n";
   print STDERR "                english (en), french (fr), spanish (es), italian (it),\n";
@@ -64,5 +69,4 @@ sub displayHelp {
   print STDERR "                italian (it), german (de), dutch (nl), swedish (sv),\n";
   print STDERR "                norwegian (no) and danish (da).\n";
   print STDERR "--help,         outputs aplication help.\n\n";
-  print STDERR "Example: cat english_text.txt | Vicomtech-language-identifier-lite_kernel -d\n\n";
 }

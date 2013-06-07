@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require_relative '../lib/opener/tokenizer/base'
+require_relative '../lib/opener/language_identifier'
 
-kernel = Opener::LanguageDetector.new
+kernel = Opener::LanguageIdentifier.new
 puts kernel.run
