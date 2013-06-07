@@ -14,6 +14,8 @@ See how to edit / change / compile this gem at the bottom of this file.
 
 ## Installation
 
+### As part of a Gemfile in a Ruby application
+
 Add this line to your application's Gemfile:
 
     gem 'opener-language-identifier',
@@ -23,10 +25,27 @@ And then execute:
 
     $ bundle install
 
-Or install it as a standalone gem:
+### As a standalone GEM:
+
+Make sure you have the ```specific_install``` gem installed first by running
+
+    $ gem install specific_install
+
+After that you can install the gem from the git repository like this:
 
     $ gem specific_install opener-language-identifier \
         -l https://github.com/opener-project/language-identifier.git
+
+Once the gem is installed you have access to the following command from
+anywhere on your computer:
+
+    $ echo "this is an english text" | language-identifier
+
+or you can launch a webservice with
+
+    $ language-identifier-server
+
+Enjoy!
 
 ## Usage
 
@@ -52,6 +71,28 @@ text. You can do so like this:
 Will result in
 
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?><KAF xml:lang="en"><raw>This is an english text </raw></KAF>
+
+## Server
+
+The language identifier comes equipped with a simple webservice. To start the
+webservice type:
+
+    language-identifier-server
+
+This will launch a mini webserver with the webservice. It defaults to port 9292,
+so you can access it at:
+
+    http://localhost:9292
+
+To launch it on a different port provide the ```-p [port-number]``` option like
+this:
+
+    language-identifier-server -p 1234
+
+It then launches at ```http://localhost:1234```
+
+Documentation on the Webservice is provided by surfing to the urls provided
+above. 
 
 
 ## Contributing
@@ -86,3 +127,8 @@ Perl code without running tests at some point you can run the following:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin features/my-new-feature`)
 5. If you're confident, merge your changes into master.
+
+# What's next? 
+
+If you're interested in the language-identifier, you also might want to check
+out opener-project/tokenizer-base.
