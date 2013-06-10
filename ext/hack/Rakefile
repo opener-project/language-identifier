@@ -1,0 +1,11 @@
+require 'mkmf'
+require_relative 'support'
+
+task :default do
+  find_executable('perl')
+  find_executable('make')
+
+  perl_extensions.each do |directory|
+    compile_perl_extension(directory)
+  end
+end
