@@ -123,6 +123,8 @@ module Opener
           logger.error("Failed to identify the text: #{error.message}")
 
           submit_error(error_callback, error.message) if error_callback
+
+          return
         end
 
         url = callbacks.shift
