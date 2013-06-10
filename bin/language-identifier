@@ -4,6 +4,11 @@ require_relative '../lib/opener/language_identifier'
 kernel = Opener::LanguageIdentifier.new(:args=>ARGV)
 
 output, error, process = kernel.run(STDIN.read)
-STDOUT.puts output
-STDERR.puts error if !error.empty?
-abort error unless process.success?
+
+if process.success?
+  puts output
+
+  STDERR.puts error unless error.empty?
+else
+  abort error
+end
