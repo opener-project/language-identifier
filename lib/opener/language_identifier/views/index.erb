@@ -2,10 +2,6 @@
 <html>
   <head>
     <style type="text/css">
-    dt
-    {
-      font-weight: bold;
-    }
 
     input[type="text"], textarea
     {
@@ -296,7 +292,21 @@
   <body>
     <h1>Language Detection Web Service</h1>
 
+    <h2>Example Usage</h2>
+
+    <p>
+      <pre>language-identifier-server start</pre>
+      <pre>curl -d "text=this is an english text&amp;kaf=true&amp;exteded=true" http://localhost:9393 -XPOST</pre>
+
+      outputs:
+
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;</pre>
+    </p>
+
     <h2>Try the webservice</h2>
+
+    <p>* required</p>
+    <p>** When entering a value no response will be displayed in the browser.</p>
 
     <form action="/" method="POST">
       <div>
@@ -334,8 +344,6 @@
       </div>
 
       <input type="submit" value="Submit" />
-      <p>* required</p>
-      <p>** When entering a value no response will be displayed in the browser.</p>
     </form>
 
     <h2>Actions</h2>
@@ -352,6 +360,7 @@
     <h2>Arguments</h2>
 
     <p> The webservice takes the following arguments: </p>
+    <p>* required</p>
 
     <dl>
       <dt>text*</dt>
@@ -381,16 +390,6 @@
 
     </dl>
 
-    <h2>Example Usage</h2>
-
-    <p>
-      <pre>language-identifier-server start</pre>
-      <pre>curl -d "text=this is an english text&amp;kaf=true&amp;exteded=true" http://localhost:9393 -XPOST</pre>
-
-      outputs:
-
-      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;</pre>
-    </p>
 
     <p>
 
