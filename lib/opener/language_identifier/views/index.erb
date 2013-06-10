@@ -1,32 +1,59 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style type="text/css">
+    dt
+    {
+      font-weight: bold;
+    }
+
+    input[type="text"], textarea
+    {
+      width: 500px;
+    }
+    </style>
+
     <title>Language Detector Webservice</title>
   </head>
   <body>
     <h1>Language Detection Web Service</h1>
 
-    <h2> Fill in the form and press submit </h2>
-
     <form action="/" method="POST">
-      <label for="text"/>Type your text here</label><br/>
-      <textarea name="text" id="text" rows="10" cols="50"/></textarea><br/>
+      <div>
+        <label for="text"/>Type your text here</label>
+        <br/>
 
-      <label for="kaf">
-        <input type="checkbox" name="kaf" id="kaf"/>
-        Output KAF instead of just the language code
-      </label><br/>
+        <textarea name="text" id="text" rows="10" cols="50"/></textarea>
+      </div>
 
-      <label for="extended">
-        <input type="checkbox" name="extended" id="extended"/>
-        Use the extended language detection list.
-      </label><br/>
+      <div>
+        <label for="callbacks">Callback URL (*)</label>
+        <br />
 
-      <input type="submit"/>
+        <input id="callbacks" type="text" name="callbacks" />
+      </div>
+
+      <div>
+        <label for="kaf">
+          <input type="checkbox" name="kaf" id="kaf"/>
+          Output KAF instead of just the language code
+        </label>
+
+        <br/>
+
+        <label for="extended">
+          <input type="checkbox" name="extended" id="extended"/>
+          Use the extended language detection list.
+        </label>
+      </div>
+
+      <input type="submit" value="Submit" />
+
+      <p>* When entering a value no response will be displayed in the browser.</p>
     </form>
 
-    <h2> Lets write some documentation here </h2>
-    <h3> Actions </h3>
+    <h2>Actions</h2>
+
     <p>
       <dl>
         <dt>POST /</dt>
@@ -36,8 +63,10 @@
       </dl>
     </p>
 
-    <h3>Arguments</h3>
+    <h2>Arguments</h2>
+
     <p> The webservice takes the following arguments: </p>
+
     <dl>
       <dt>input</dt>
       <dd>The input text</dd>
@@ -46,15 +75,16 @@
       <dt>extended</dt>
       <dd>Use the extended language list instead of the standard languages</dt>
     </dl>
-    <h3>Example Usage</h3>
+
+    <h2>Example Usage</h2>
+
     <p>
-      <pre>
-        language-identifier-server start
-        curl -d "text=this is an english text&kaf=true&exteded=true" http://localhost:9393 -XPOST
-      </pre>
-    outputs:
-      <pre>
-        &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;
-      </pre>
+      <pre>language-identifier-server start</pre>
+      <pre>curl -d "text=this is an english text&amp;kaf=true&amp;exteded=true" http://localhost:9393 -XPOST</pre>
+
+      outputs:
+
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;</pre>
+    </p>
   </body>
 </html>

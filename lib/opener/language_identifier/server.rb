@@ -46,7 +46,11 @@ module Opener
           halt(400, 'No text specified')
         end
 
-        params[:callbacks] ? process_async : process_sync
+        if params[:callbacks] and !params[:callbacks].strip.empty?
+          process_async
+        else
+          process_sync
+        end
       end
 
       private
@@ -56,6 +60,8 @@ module Opener
       #
       def process_sync
         output = identify_text(params[:text])
+
+        content_type(:xml) if params[:kaf]
 
         body(output)
       rescue => error
