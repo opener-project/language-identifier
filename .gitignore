@@ -9,3 +9,4 @@ Gemfile.lock
 tmp/*
 core/lib/built/*
 !core/lib/built/.gitkeep
+Gemfile.lock
