@@ -1,38 +1,49 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style type="text/css">
-    dt
-    {
-      font-weight: bold;
-    }
-
-    input[type="text"], textarea
-    {
-      width: 500px;
-    }
-    </style>
-
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="markdown.css"/>
     <title>Language Detector Webservice</title>
   </head>
   <body>
     <h1>Language Detection Web Service</h1>
 
+    <h2>Example Usage</h2>
+
+    <p>
+      <pre>language-identifier-server start</pre>
+      <pre>curl -d "text=this is an english text&amp;kaf=true&amp;exteded=true" http://localhost:9393 -XPOST</pre>
+
+      outputs:
+
+      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;</pre>
+    </p>
+
+    <h2>Try the webservice</h2>
+
+    <p>* required</p>
+    <p>** When entering a value no response will be displayed in the browser.</p>
+
     <form action="/" method="POST">
       <div>
-        <label for="text"/>Type your text here</label>
+        <label for="text"/>Type your text here*</label>
         <br/>
 
         <textarea name="text" id="text" rows="10" cols="50"/></textarea>
       </div>
 
       <div>
-        <label for="callbacks">Callback URL (*)</label>
+        <label for="callbacks">Callback URL (**)</label>
         <br />
 
         <input id="callbacks" type="text" name="callbacks" />
       </div>
 
+      <div>
+        <label for="error_callback">Error Callback</label>
+        <br />
+
+        <input id="error_callback" type="text" name="error_callback" />
+      </div>
       <div>
         <label for="kaf">
           <input type="checkbox" name="kaf" id="kaf"/>
@@ -48,8 +59,6 @@
       </div>
 
       <input type="submit" value="Submit" />
-
-      <p>* When entering a value no response will be displayed in the browser.</p>
     </form>
 
     <h2>Actions</h2>
@@ -66,25 +75,40 @@
     <h2>Arguments</h2>
 
     <p> The webservice takes the following arguments: </p>
+    <p>* required</p>
 
     <dl>
-      <dt>input</dt>
+      <dt>text*</dt>
       <dd>The input text</dd>
-      <dt>kaf</dt>
+      <dt>kaf [true | false]</dt>
       <dd>Output a KAF file with the language in the xml:lang attribute and the text in the raw tag</dd>
-      <dt>extended</dt>
+      <dt>extended [true | false]</dt>
       <dd>Use the extended language list instead of the standard languages</dt>
+      <dt>callbacks</dt>
+      <dd>
+            You can provide a list of callback urls. If you provide callback urls
+            the language identification will run as a background job and a callback
+            with the results will be performed (POST) to the first url in the callback
+            list. The other urls in callback list will be provided in the "callbacks"
+            argument.<br/><br/>
+            Using callback you can chain together several OpeNER webservices in
+        one call. The first, will call the second, which will call the third, etc.
+        See for more information the <a href="http://opener-project.github.io">
+          webservice documentation online</a>.
+      </dd>
+      <dt>error_callback</dt>
+      <dd>URL to notify if errors occur in the background process. The error
+      callback will do a POST with the error message in the 'error' field.</dd>
+      </dt>
+
+
+
     </dl>
 
-    <h2>Example Usage</h2>
 
     <p>
-      <pre>language-identifier-server start</pre>
-      <pre>curl -d "text=this is an english text&amp;kaf=true&amp;exteded=true" http://localhost:9393 -XPOST</pre>
 
-      outputs:
-
-      <pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;&lt;KAF xml:lang=&quot;en&quot;&gt;&lt;raw&gt;this is an english text&lt;/raw&gt;&lt;/KAF&gt;</pre>
     </p>
+
   </body>
 </html>
