@@ -1,55 +1,128 @@
+require 'open3'
+require 'optparse'
+require 'builder'
+
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
-require_relative 'language_identifier/option_parser'
-require 'open3'
+require_relative 'language_identifier/cli'
 
 module Opener
+  ##
+  # Language identifier class that can detect various languages such as Dutch,
+  # German and Swedish.
+  #
+  # @!attribute [r] options
+  #  @return [Hash]
+  #
   class LanguageIdentifier
-    attr_reader :kernel, :lib, :args
-    attr_accessor :options
+    attr_reader :options
 
-    def initialize(opts={})
-      @args    = opts.delete(:args) || []
-      @options = opts
+    ##
+    # Hash containing the default options to use.
+    #
+    # @return [Hash]
+    #
+    DEFAULT_OPTIONS = {
+      :args     => [],
+      :extended => false,
+      :kaf      => false
+    }.freeze
+
+    ##
+    # @param [Hash] options
+    #
+    # @option options [Array] :args Arbitrary arguments to pass to the
+    #  underlying kernel.
+    # @option options [TrueClass|FalseClass] :extended When set to `true`
+    #  extended language detection will be enabled.
+    # @option options [TrueClass|FalseClass] :kaf When set to `true` the
+    #  results will be displayed as KAF.
+    #
+    def initialize(options = {})
+      @options = DEFAULT_OPTIONS.merge(options)
     end
 
+    ##
+    # Returns a String containing the command to use for executing the kernel.
+    #
+    # @return [String]
+    #
     def command
-      "perl -I #{lib} #{kernel} #{args.join(' ')}"
+      return "perl -I #{lib} #{kernel} #{command_arguments.join(' ')}"
     end
 
-    def identify(text)
-      options[:kaf] ? kaf_output(text) : default_output(text)
+    ##
+    # Processes the input and returns an Array containing the output of STDOUT,
+    # STDERR and an object containing process information.
+    #
+    # @param [String] input The text of which to detect the language.
+    # @return [Array]
+    #
+    def run(input)
+      input = input.strip
+
+      stdout, stderr, process = Open3.capture3(command, :stdin_data => input)
+
+      if options[:kaf]
+        stdout = build_kaf(input, stdout)
+      end
+
+      return stdout, stderr, process
     end
 
-    alias :run :identify
-
-    def options
-      OptionParser.parse(args.dup).merge(@options)
-    end
+    alias identify run
 
     protected
 
-    def default_output(text)
-      Open3.capture3(command, :stdin_data=>text)
+    ##
+    # Returns the arguments to pass to the underlying kernel as an Array.
+    #
+    # @return [Array]
+    #
+    def command_arguments
+      arguments = options[:args].dup
+
+      if options[:extended]
+        arguments << '-d'
+      end
+
+      return arguments
     end
 
-    def kaf_output(text)
-      output, error, process = default_output(text)
-      output = KafBuilder.new(text, output).build
-      [output, error, process]
+    ##
+    # Builds a KAF document containing the input and the correct XML language
+    # tag based on the output of the kernel.
+    #
+    # @param [String] input The input text.
+    # @param [String] language The detected language
+    # @return [String]
+    #
+    def build_kaf(input, language)
+      builder = KafBuilder.new(input, language)
+      builder.build
+
+      return builder.to_s
     end
 
+    ##
+    # @return [String]
+    #
     def core_dir
-      File.expand_path("../../../core", __FILE__)
+      return File.expand_path('../../../core', __FILE__)
     end
 
+    ##
+    # @return [String]
+    #
     def kernel
-      File.join(core_dir,'language_detector.pl')
+      return File.join(core_dir, 'language_detector.pl')
     end
 
+    ##
+    # @return [String]
+    #
     def lib
-      File.join(core_dir,'lib/') # Trailing / is required
+      return File.join(core_dir, 'lib/') # Trailing / is required
     end
-
-  end
-end
+  end # LanguageIdentifier
+end # Opener

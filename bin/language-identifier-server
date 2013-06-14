@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/opener/language_identifier/server'
+require 'rack'
 
 # Without calling `Rack::Server#options` manually the CLI arguments will never
 # be passed, thus the application can't be specified as a constructor argument.
