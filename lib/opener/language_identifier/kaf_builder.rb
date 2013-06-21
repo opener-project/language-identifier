@@ -35,7 +35,7 @@ module Opener
           :standalone => 'yes'
         )
 
-        xml.KAF('xml:lang' => language) do |node|
+        xml.KAF('xml:lang' => language, 'version' => version) do |node|
           node.raw(original_text)
         end
       end
@@ -48,6 +48,11 @@ module Opener
       def to_s
         return xml.target!
       end
+      
+      def version
+        "v1.opener"
+      end
+      
     end # KafBuilder
   end # LanguageIdentifier
 end # Opener
