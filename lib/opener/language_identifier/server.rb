@@ -156,7 +156,7 @@ module Opener
       def process_callback(url, text, callbacks)
         HTTPClient.post(
           url,
-          :body => {:text => text, :kaf => true, :callbacks => callbacks}
+          :body => {:text => text, :'callbacks[]' => callbacks, :kaf => true}
         )
       end
 
@@ -175,8 +175,7 @@ module Opener
       # @return [Array]
       #
       def extract_callbacks(input)
-        callbacks = input.is_a?(Array) ? input : [input]
-        callbacks = callbacks.compact.reject(&:empty?)
+        callbacks = input.compact.reject(&:empty?)
 
         return callbacks
       end
