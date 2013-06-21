@@ -154,7 +154,7 @@ module Opener
       def process_callback(url, language, callbacks)
         HTTPClient.post(
           url,
-          :body => {:language => language, :callbacks => callbacks}
+          :body => {:text => language, :callbacks => callbacks}
         )
       end
 
