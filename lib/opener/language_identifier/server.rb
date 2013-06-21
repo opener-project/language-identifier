@@ -45,11 +45,13 @@ module Opener
 
           halt(400, 'No text specified')
         end
-
-        if params[:callbacks] and !params[:callbacks].strip.empty?
-          process_async
-        else
+        
+        callbacks = extract_callbacks(params[:callbacks])
+        
+        if callbacks.empty?
           process_sync
+        else
+          process_async(callbacks)
         end
       end
 
@@ -73,10 +75,9 @@ module Opener
       ##
       # Processes the request asynchronously.
       #
-      def process_async
-        callbacks = params[:callbacks]
-        callbacks = [callbacks] unless callbacks.is_a?(Array)
-
+      # @param [Array] callbacks The callback URLs to use.
+      #
+      def process_async(callbacks)
         Thread.new do
           identify_async(params[:text], callbacks, params[:error_callback])
         end
@@ -108,7 +109,7 @@ module Opener
       def options_from_params
         options = {}
 
-        [:kaf, :extended, :callback].each do |key|
+        [:kaf, :extended].each do |key|
           options[key] = params[key]
         end
 
@@ -124,7 +125,7 @@ module Opener
       #
       def identify_async(text, callbacks, error_callback = nil)
         begin
-          language = identify_text(text)
+          output = identify_text(text)
         rescue => error
           logger.error("Failed to identify the text: #{error.message}")
 
@@ -136,9 +137,10 @@ module Opener
         url = callbacks.shift
 
         logger.info("Submitting results to #{url}")
+        logger.info("Using callback URLs: #{callbacks.join(', ')}")
 
         begin
-          process_callback(url, language, callbacks)
+          process_callback(url, output, callbacks)
         rescue => error
           logger.error("Failed to submit the results: #{error.inspect}")
 
@@ -148,13 +150,13 @@ module Opener
 
       ##
       # @param [String] url
-      # @param [String] language
+      # @param [String] text
       # @param [Array] callbacks
       #
-      def process_callback(url, language, callbacks)
+      def process_callback(url, text, callbacks)
         HTTPClient.post(
           url,
-          :body => {:text => language, :callbacks => callbacks}
+          :body => {:text => text, :kaf => true, :callbacks => callbacks}
         )
       end
 
@@ -164,6 +166,19 @@ module Opener
       #
       def submit_error(url, message)
         HTTPClient.post(url, :body => {:error => message})
+      end
+
+      ##
+      # Returns an Array containing the callback URLs, ignoring empty values.
+      #
+      # @param [Array|String] input
+      # @return [Array]
+      #
+      def extract_callbacks(input)
+        callbacks = input.is_a?(Array) ? input : [input]
+        callbacks = callbacks.compact.reject(&:empty?)
+
+        return callbacks
       end
     end # Server
   end # LanguageIdentifier

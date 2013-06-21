@@ -30,13 +30,15 @@
 
         <textarea name="text" id="text" rows="10" cols="50"/></textarea>
       </div>
-
+      <% 5.times do |t| %>
       <div>
-        <label for="callbacks">Callback URL (**)</label>
+        <label for="callbacks">Callback URL <%=t+1%>(**)</label>
         <br />
 
-        <input id="callbacks" type="text" name="callbacks" />
+        <input id="callbacks" type="text" name="callbacks[]" />
       </div>
+      <% end %>
+
 
       <div>
         <label for="error_callback">Error Callback</label>
