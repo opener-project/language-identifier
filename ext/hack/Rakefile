@@ -1,10 +1,12 @@
 require 'mkmf'
 require_relative 'support'
 
-task :default do
-  find_executable('perl')
-  find_executable('make')
+desc 'Verifies the requirements'
+task :requirements do
+  verify_requirements
+end
 
+task :default => :requirements do
   perl_extensions.each do |directory|
     compile_perl_extension(directory)
   end

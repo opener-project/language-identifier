@@ -1,3 +1,8 @@
+require 'opener/build-tools'
+
+include Opener::BuildTools::Requirements
+include Opener::BuildTools::Perl
+
 # Directory that contains all the Perl modules that have to be compiled.
 PERL_EXT = File.expand_path('../../../core/ext', __FILE__)
 
@@ -15,11 +20,11 @@ def compile_perl_extension(directory, prefix = PERL_PREFIX)
   Dir.chdir(directory) do
     puts "Building Perl module #{File.basename(directory)}"
 
-    system "perl Makefile.PL PREFIX=#{prefix} LIB=#{prefix}"
-    system 'make'
-    system 'make install'
-    system 'make clean'
-    system 'rm Makefile.old'
+    sh "perl Makefile.PL PREFIX=#{prefix} LIB=#{prefix}"
+    sh 'make'
+    sh 'make install'
+    sh 'make clean'
+    sh 'rm Makefile.old'
   end
 end
 
@@ -30,4 +35,16 @@ end
 #
 def perl_extensions
   return Dir.glob(File.join(PERL_EXT, '*'))
+end
+
+##
+# Checks if the various requirements are met and bails out if this is not the
+# case.
+#
+def verify_requirements
+  require_executable('make')
+  require_executable('perl')
+
+  require_perl_module('ExtUtils::MakeMaker')
+  require_perl_module('FindBin')
 end

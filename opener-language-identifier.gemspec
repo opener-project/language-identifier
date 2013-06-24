@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'builder'
   gem.add_dependency 'sinatra', '~>1.4.2'
   gem.add_dependency 'httpclient'
+  gem.add_dependency 'opener-build-tools'
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cucumber'
