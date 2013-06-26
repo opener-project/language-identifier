@@ -48,11 +48,11 @@ module Opener
       def to_s
         return xml.target!
       end
-      
+
       def version
-        "v1.opener"
+        "2.1"
       end
-      
+
     end # KafBuilder
   end # LanguageIdentifier
 end # Opener

@@ -30,6 +30,19 @@
 
         <textarea name="text" id="text" rows="10" cols="50"/></textarea>
       </div>
+      <div>
+        <label for="kaf">
+          <input type="checkbox" name="kaf" id="kaf"/>
+          Output KAF instead of just the language code
+        </label>
+
+        <br/>
+
+        <label for="extended">
+          <input type="checkbox" name="extended" id="extended"/>
+          Use the extended language detection list.
+        </label>
+      </div>
       <% 10.times do |t| %>
       <div>
         <label for="callbacks">Callback URL <%=t+1%>(**)</label>
@@ -45,19 +58,6 @@
         <br />
 
         <input id="error_callback" type="text" name="error_callback" />
-      </div>
-      <div>
-        <label for="kaf">
-          <input type="checkbox" name="kaf" id="kaf"/>
-          Output KAF instead of just the language code
-        </label>
-
-        <br/>
-
-        <label for="extended">
-          <input type="checkbox" name="extended" id="extended"/>
-          Use the extended language detection list.
-        </label>
       </div>
 
       <input type="submit" value="Submit" />

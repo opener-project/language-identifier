@@ -18,7 +18,7 @@ module Opener
 
       helpers do
         def webservice_path
-          (request.path_info + "/").gsub(/\/\//,'/')
+          (request.script_name + "/").gsub(/\/\//,'/')
         end
       end
 
@@ -72,10 +72,10 @@ module Opener
         content_type(:xml) if params[:kaf]
 
         body(output)
-      rescue => error
-        logger.error("Failed to identify the text: #{error.inspect}")
+      #rescue => error
+        #logger.error("Failed to identify the text: #{error.inspect}")
 
-        halt(500, error.message)
+        #halt(500, error.message)
       end
 
       ##
