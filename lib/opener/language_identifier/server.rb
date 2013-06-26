@@ -16,6 +16,12 @@ module Opener
         set :dump_errors, true
       end
 
+      helpers do
+        def webservice_path
+          (request.path_info + "/").gsub(/\/\//,'/')
+        end
+      end
+
       ##
       # Provides a page where you see a textfield and you can post stuff
       #
@@ -45,9 +51,9 @@ module Opener
 
           halt(400, 'No text specified')
         end
-        
+
         callbacks = extract_callbacks(params[:callbacks])
-        
+
         if callbacks.empty?
           process_sync
         else
