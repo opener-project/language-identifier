@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'httpclient'
+require 'uuidtools'
 
 module Opener
   class LanguageIdentifier
@@ -14,12 +15,6 @@ module Opener
       configure :development do
         set :raise_errors, true
         set :dump_errors, true
-      end
-
-      helpers do
-        def webservice_path
-          (request.script_name + "/").gsub(/\/\//,'/')
-        end
       end
 
       ##
@@ -53,7 +48,6 @@ module Opener
         end
 
         callbacks = extract_callbacks(params[:callbacks])
-
         if callbacks.empty?
           process_sync
         else
@@ -84,11 +78,13 @@ module Opener
       # @param [Array] callbacks The callback URLs to use.
       #
       def process_async(callbacks)
+        request_id = get_request_id
+        output_url = callbacks.last
         Thread.new do
-          identify_async(params[:text], callbacks, params[:error_callback])
+          identify_async(params[:text], request_id, callbacks, params[:error_callback])
         end
 
-        status(202)
+        erb :result, :locals => {:output_url => [output_url, request_id].join("/")}
       end
 
       ##
@@ -129,7 +125,7 @@ module Opener
       # @param [Array] callbacks
       # @param [String] error_callback
       #
-      def identify_async(text, callbacks, error_callback = nil)
+      def identify_async(text, request_id, callbacks, error_callback = nil)
         begin
           output = identify_text(text)
         rescue => error
@@ -146,7 +142,7 @@ module Opener
         logger.info("Using callback URLs: #{callbacks.join(', ')}")
 
         begin
-          process_callback(url, output, callbacks)
+          process_callback(url, output, request_id, callbacks)
         rescue => error
           logger.error("Failed to submit the results: #{error.inspect}")
 
@@ -159,10 +155,10 @@ module Opener
       # @param [String] text
       # @param [Array] callbacks
       #
-      def process_callback(url, text, callbacks)
+      def process_callback(url, text, request_id, callbacks)
         HTTPClient.post(
           url,
-          :body => {:text => text, :'callbacks[]' => callbacks, :kaf => true}
+          :body => {:text => text, :request_id => request_id, :'callbacks[]' => callbacks, :kaf => true}
         )
       end
 
@@ -181,9 +177,16 @@ module Opener
       # @return [Array]
       #
       def extract_callbacks(input)
-        callbacks = input.compact.reject(&:empty?)
+        if !input.nil?
+          callbacks = input.compact.reject(&:empty?)
+          return callbacks
+        else
+          return []
+        end
+      end
 
-        return callbacks
+      def get_request_id
+        return params[:request_id] || UUIDTools::UUID.random_create
       end
     end # Server
   end # LanguageIdentifier
