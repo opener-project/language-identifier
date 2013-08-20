@@ -1,4 +1,4 @@
-require File.expand_path('../lib/opener/language_identifier', __FILE__)
+require File.expand_path('../lib/opener/language_identifier/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name                  = 'opener-language-identifier'
