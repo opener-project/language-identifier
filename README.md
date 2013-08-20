@@ -1,3 +1,5 @@
+[![Build Status](https://drone.io/github.com/opener-project/language-identifier/status.png)](https://drone.io/github.com/opener-project/language-identifier/latest)
+
 # Language Identifier
 
 The language identifier takes raw text and returns the language of said text.
