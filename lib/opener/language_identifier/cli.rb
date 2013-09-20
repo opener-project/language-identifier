@@ -29,9 +29,9 @@ module Opener
             show_version
           end
 
-          opts.on('-d', 'Use extended language detection') do
-            @options[:extended] = true
-          end
+         # opts.on('-d', 'Use extended language detection') do
+         #   @options[:extended] = true
+         # end
 
           opts.on('-k', '--kaf', 'Output the language as KAF') do
             @options[:kaf] = true
@@ -42,29 +42,62 @@ module Opener
 Examples:
 
   cat example_text.txt | #{opts.program_name}    # Basic detection
-  cat example_text.txt | #{opts.program_name} -d # Extended detection
 
 Languages:
 
-  * Dutch (nl)
-  * English (en)
-  * French (fr)
-  * German (de)
-  * Italian (it)
-  * Spanish (es)
-
-Extended Languages:
-
-  When turning on extended language detection the following languages are also
-  supported:
-
-  * Danish (da)
-  * Norwegian (no)
-  * Portugese (pt)
-  * Swedish (sv)
-
-  Extended language detection is turned off by default to increase the
-  detection accuracy.
+  * af	Afrikaans
+  * ar	Arabic
+  * bg	Bulgarian
+  * bn	Bengali
+  * cs	Czech
+  * da	Danish
+  * de	German
+  * el	Greek
+  * en	English
+  * es	Spanish
+  * et	Estonian
+  * fa	Persian
+  * fi	Finnish
+  * fr	French
+  * gu	Gujarati
+  * he	Hebrew
+  * hi	Hindi
+  * hr	Croatian
+  * hu	Hungarian
+  * id	Indonesian
+  * it	Italian
+  * ja	Japanese
+  * kn	Kannada
+  * ko	Korean
+  * lt	Lithuanian
+  * lv	Latvian
+  * mk	Macedonian
+  * ml	Malayalam
+  * mr	Marathi
+  * ne	Nepali
+  * nl	Dutch
+  * no	Norwegian
+  * pa	Punjabi
+  * pl	Polish
+  * pt	Portuguese
+  * ro	Romanian
+  * ru	Russian
+  * sk	Slovak
+  * sl	Slovene
+  * so	Somali
+  * sq	Albanian
+  * sv	Swedish
+  * sw	Swahili
+  * ta	Tamil
+  * te	Telugu
+  * th	Thai
+  * tl	Tagalog
+  * tr	Turkish
+  * uk	Ukrainian
+  * ur	Urdu
+  * vi	Vietnamese
+  * zh-cn	Simplified Chinese
+  * zh-tw	Traditional Chinese
           EOF
         end
       end

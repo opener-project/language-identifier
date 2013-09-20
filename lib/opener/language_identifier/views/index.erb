@@ -11,7 +11,7 @@
 
     <p>
       <pre>language-identifier-server start</pre>
-      <pre>curl -d "input=this is an english text&amp;kaf=true&amp;exteded=true" http://localhost:9393 -XPOST</pre>
+      <pre>curl -d "input=this is an english text&amp;kaf=true" http://localhost:9393 -XPOST</pre>
 
       outputs:
 
@@ -35,13 +35,8 @@
           <input type="checkbox" name="kaf" id="kaf"/>
           Output KAF instead of just the language code
         </label>
-
-        <br/>
-
-        <label for="extended">
-          <input type="checkbox" name="extended" id="extended"/>
-          Use the extended language detection list.
-        </label>
+	<br>
+        <br>
       </div>
       <% 10.times do |t| %>
       <div>
@@ -84,7 +79,6 @@
       <dd>The input text</dd>
       <dt>kaf [true | false]</dt>
       <dd>Output a KAF file with the language in the xml:lang attribute and the text in the raw tag</dd>
-      <dt>extended [true | false]</dt>
       <dd>Use the extended language list instead of the standard languages</dt>
       <dt>callbacks</dt>
       <dd>

@@ -1,5 +1,7 @@
 require File.expand_path('../lib/opener/language_identifier/version', __FILE__)
 
+generated = Dir.glob('core/target/LanguageDetection-*.jar')
+
 Gem::Specification.new do |gem|
   gem.name                  = 'opener-language-identifier'
   gem.version               = Opener::LanguageIdentifier::VERSION
@@ -7,11 +9,10 @@ Gem::Specification.new do |gem|
   gem.summary               = 'Language identifier for human readable text.'
   gem.description           = gem.summary
   gem.homepage              = "http://opener-project.github.com/"
-  gem.extensions            = ['ext/hack/Rakefile']
   gem.has_rdoc              = 'yard'
   gem.required_ruby_version = '>= 1.9.2'
 
-  gem.files       = `git ls-files`.split("\n")
+  gem.files       = (`git ls-files`.split("\n") + generated).sort
   gem.executables = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files  = gem.files.grep(%r{^(test|spec|features)/})
 

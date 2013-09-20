@@ -1,20 +1,75 @@
 [![Build Status](https://drone.io/github.com/opener-project/language-identifier/status.png)](https://drone.io/github.com/opener-project/language-identifier/latest)
 
-# Language Identifier
+# Opener::LanguageIdentifier
 
 The language identifier takes raw text and returns the language of said text.
 
+## Quick Use Overview
+
+Install the Gem using Specific Install
+
+    gem specific_install opener-language-identifier \
+        -l https://github.com/opener-project/language-identifier.git
+
+If you dont have specific\_install already, install it first:
+
+    gem intall specific_install
+
+You should now be able to call the language indentifier as a regular shell command, by its
+name. Once installed as a gem you can access the gem from anywhere. This aplication
+reads a text from standard input in order to tokenize.
+
+    echo "This is an English text." | language-identifier
+
+or you can launch a webservice with
+
+    $ language-identifier-server
+
+For more information about the available CLI options run the following:
+
+    language-identifier --help
+
 ## Requirements
 
-* Perl 5
-* Ruby 1.9.2 or newer
-* Make
-
-## Developers
-
-See how to edit / change / compile this gem at the bottom of this file.
+* Java 1.7 or newer (There are problems with encoding in older versions.)
+* Ruby 1.9.3 or newer (1.9.2 should work too but 1.9.3. is recommended). Ruby
+  2 is supported.
+* Maven (for building the Gem)
 
 ## Installation
+
+To set up the project run the following commands:
+
+    bundle install
+    bundle exec rake compile
+
+This will install all the dependencies and generate the Java files. To run all
+the tests (including the process of building the files first) you can run the
+following:
+
+    bundle exec rake
+
+or:
+
+    bundle exec rake test
+
+Building a new Gem can be done as following:
+
+    bundle exec rake build
+
+For more information invoke `rake -T` or take a look at the Rakefile.
+
+## Editing Java Code
+
+Editing the Java code can be done as following:
+
+    $ cd core
+    $ mvn eclipse:eclipse
+
+Then you can import the Java project to Eclipse (don't check the "Copy project
+content" checkbox to edit the actual code). Once you finish editing the code
+(and hopefully after some testing) you can commit your changes to git directly
+(no more copy-paste)
 
 ### As part of a Gemfile in a Ruby application
 
@@ -38,26 +93,11 @@ After that you can install the gem from the git repository like this:
     $ gem specific_install opener-language-identifier \
         -l https://github.com/opener-project/language-identifier.git
 
-Once the gem is installed you have access to the following command from
-anywhere on your computer:
-
-    $ echo "this is an english text" | language-identifier
-
-or you can launch a webservice with
-
-    $ language-identifier-server
-
-Enjoy!
-
 ## Usage
 
 Detecting a language:
 
     echo "This is English text" | language-identifier
-
-Using extended language detection:
-
-    echo "Dit is een Nederlandse text" | language-identifier -d
 
 For more information about the usage and available options run the following:
 
@@ -98,29 +138,6 @@ above.
 
 
 ## Contributing
-
-### Compiling Perl
-
-The Gem comes with various Perl dependencies that are vendored, including one C
-extension. This extension is compiled upon Gem installation or when running the
-following command:
-
-    rake compile
-
-### Hacking
-
-First install the required dependencies:
-
-    bundle install
-
-Then run the tests to see if everything is working:
-
-    rake
-
-This will compile the Perl code and run the tests. If you want to recompile the
-Perl code without running tests at some point you can run the following:
-
-    rake compile
 
 ### Procedure
 
