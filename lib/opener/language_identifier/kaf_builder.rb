@@ -49,10 +49,12 @@ module Opener
         return xml.target!
       end
 
+      ##
+      # @return [String]
+      #
       def version
-        "2.1"
+        return "2.1"
       end
-
     end # KafBuilder
   end # LanguageIdentifier
 end # Opener

@@ -7,6 +7,7 @@ Gemfile.lock
 .rvmrc
 *.so
 tmp/*
-core/lib/built/*
-!core/lib/built/.gitkeep
 Gemfile.lock
+
+core/target
+core/dependency-reduced-pom.xml
