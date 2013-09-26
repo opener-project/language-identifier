@@ -29,10 +29,6 @@ module Opener
             show_version
           end
 
-         # opts.on('-d', 'Use extended language detection') do
-         #   @options[:extended] = true
-         # end
-
           opts.on('-k', '--kaf', 'Output the language as KAF') do
             @options[:kaf] = true
           end

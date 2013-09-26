@@ -1,8 +1,10 @@
 [![Build Status](https://drone.io/github.com/opener-project/language-identifier/status.png)](https://drone.io/github.com/opener-project/language-identifier/latest)
 
-# Opener::LanguageIdentifier
+# Language Identifier
 
-The language identifier takes raw text and returns the language of said text.
+The language identifier takes raw text and tries to figure out what language it
+was written in. The output can either be a plain-text language code or a basic
+KAF document containing the language and raw input text.
 
 ## Quick Use Overview
 
@@ -15,13 +17,14 @@ If you dont have specific\_install already, install it first:
 
     gem intall specific_install
 
-You should now be able to call the language indentifier as a regular shell command, by its
-name. Once installed as a gem you can access the gem from anywhere. This aplication
-reads a text from standard input in order to tokenize.
+You should now be able to call the language indentifier as a regular shell
+command, by its name. Once installed as a gem you can access the gem from
+anywhere. This aplication reads a text from standard input in order to
+tokenize.
 
     echo "This is an English text." | language-identifier
 
-or you can launch a webservice with
+Or you can launch a webservice with
 
     $ language-identifier-server
 
@@ -31,9 +34,8 @@ For more information about the available CLI options run the following:
 
 ## Requirements
 
-* Java 1.7 or newer (There are problems with encoding in older versions.)
-* Ruby 1.9.3 or newer (1.9.2 should work too but 1.9.3. is recommended). Ruby
-  2 is supported.
+* Java 1.7 or newer (There are problems with encoding in older versions).
+* Ruby 1.9.3 or newer
 * Maven (for building the Gem)
 
 ## Installation
@@ -59,40 +61,6 @@ Building a new Gem can be done as following:
 
 For more information invoke `rake -T` or take a look at the Rakefile.
 
-## Editing Java Code
-
-Editing the Java code can be done as following:
-
-    $ cd core
-    $ mvn eclipse:eclipse
-
-Then you can import the Java project to Eclipse (don't check the "Copy project
-content" checkbox to edit the actual code). Once you finish editing the code
-(and hopefully after some testing) you can commit your changes to git directly
-(no more copy-paste)
-
-### As part of a Gemfile in a Ruby application
-
-Add this line to your application's Gemfile:
-
-    gem 'opener-language-identifier',
-        :git=>"git@github.com:opener-project/language-identifier.git"
-
-And then execute:
-
-    $ bundle install
-
-### As a standalone GEM:
-
-Make sure you have the ```specific_install``` gem installed first by running
-
-    $ gem install specific_install
-
-After that you can install the gem from the git repository like this:
-
-    $ gem specific_install opener-language-identifier \
-        -l https://github.com/opener-project/language-identifier.git
-
 ## Usage
 
 Detecting a language:
@@ -112,7 +80,10 @@ text. You can do so like this:
 
 Will result in
 
-    <?xml version="1.0" encoding="UTF-8" standalone="yes"?><KAF xml:lang="en"><raw>This is an english text </raw></KAF>
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <KAF xml:lang="en">
+      <raw>This is an english text</raw>
+    </KAF>
 
 ## Server
 
@@ -134,20 +105,16 @@ this:
 It then launches at ```http://localhost:1234```
 
 Documentation on the Webservice is provided by surfing to the urls provided
-above. 
+above.
 
+## Editing Java Code
 
-## Contributing
+Editing the Java code can be done as following:
 
-### Procedure
+    $ cd core
+    $ mvn eclipse:eclipse
 
-1. Pull it
-2. Create your feature branch (`git checkout -b features/my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin features/my-new-feature`)
-5. If you're confident, merge your changes into master.
-
-# What's next? 
-
-If you're interested in the language-identifier, you also might want to check
-out opener-project/tokenizer-base.
+Then you can import the Java project to Eclipse (don't check the "Copy project
+content" checkbox to edit the actual code). Once you finish editing the code
+(and hopefully after some testing) you can commit your changes to git directly
+(no more copy-paste)

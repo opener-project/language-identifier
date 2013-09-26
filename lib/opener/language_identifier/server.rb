@@ -11,7 +11,6 @@ module Opener
       set :views, File.expand_path('../views', __FILE__)
       text_processor LanguageIdentifier
       accepted_params :input, :kaf
-      #accepted_params :input, :kaf, :extended
     end # Server
   end # LanguageIdentifier
 end # Opener

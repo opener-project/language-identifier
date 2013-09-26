@@ -23,9 +23,8 @@ module Opener
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
-      :args     => [],
-    #  :extended => false,
-      :kaf      => false
+      :args => [],
+      :kaf  => false
     }.freeze
 
     ##
@@ -48,7 +47,6 @@ module Opener
     # @return [String]
     #
     def command
- #     return "perl -I #{lib} #{kernel} #{command_arguments.join(' ')}"
       return "java -jar #{kernel} #{command_arguments.join(' ')}"
     end
 
@@ -83,10 +81,6 @@ module Opener
     def command_arguments
       arguments = options[:args].dup
 
-     # if options[:extended]
-     #   arguments << '-d'
-     # end
-
       return arguments
     end
 
@@ -117,7 +111,6 @@ module Opener
     #
     def kernel
       return File.join(core_dir, 'LanguageDetection-0.0.1.jar')
-      #return File.join(core_dir, 'language_detector.pl')
     end
 
     ##
