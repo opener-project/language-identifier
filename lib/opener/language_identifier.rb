@@ -1,6 +1,10 @@
 require 'open3'
 require 'optparse'
 require 'builder'
+require 'java'
+
+require 'core/target/LanguageDetection-0.0.1.jar'
+import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
 
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
@@ -15,7 +19,10 @@ module Opener
   #  @return [Hash]
   #
   class LanguageIdentifier
+    class Status; def success?; true; end; end
     attr_reader :options
+
+    @@detector = CybozuDetector.new("core/target/classes/profiles")
 
     ##
     # Hash containing the default options to use.
@@ -24,7 +31,7 @@ module Opener
     #
     DEFAULT_OPTIONS = {
       :args => [],
-      :kaf  => false
+      :kaf  => true
     }.freeze
 
     ##
@@ -42,15 +49,6 @@ module Opener
     end
 
     ##
-    # Returns a String containing the command to use for executing the kernel.
-    #
-    # @return [String]
-    #
-    def command
-      return "java -jar #{kernel} #{command_arguments.join(' ')}"
-    end
-
-    ##
     # Processes the input and returns an Array containing the output of STDOUT,
     # STDERR and an object containing process information.
     #
@@ -58,31 +56,14 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      input = input.strip
-
-      stdout, stderr, process = Open3.capture3(command, :stdin_data => input)
-
-      if options[:kaf]
-        stdout = build_kaf(input, stdout)
-      end
-
-      return stdout, stderr, process
+      output = @@detector.detect(input)
+      output = build_kaf(input, output) if @options[:kaf]
+      [output, nil, Status.new]
     end
 
     alias identify run
 
     protected
-
-    ##
-    # Returns the arguments to pass to the underlying kernel as an Array.
-    #
-    # @return [Array]
-    #
-    def command_arguments
-      arguments = options[:args].dup
-
-      return arguments
-    end
 
     ##
     # Builds a KAF document containing the input and the correct XML language
@@ -97,27 +78,6 @@ module Opener
       builder.build
 
       return builder.to_s
-    end
-
-    ##
-    # @return [String]
-    #
-    def core_dir
-      return File.expand_path('../../../core/target', __FILE__)
-    end
-
-    ##
-    # @return [String]
-    #
-    def kernel
-      return File.join(core_dir, 'LanguageDetection-0.0.1.jar')
-    end
-
-    ##
-    # @return [String]
-    #
-    def lib
-      return File.join(core_dir, 'lib/') # Trailing / is required
     end
   end # LanguageIdentifier
 end # Opener
