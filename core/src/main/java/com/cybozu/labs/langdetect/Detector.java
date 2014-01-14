@@ -6,6 +6,7 @@ import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -73,7 +74,7 @@ public class Detector {
     private double[] langprob = null;
 
     private double alpha = ALPHA_DEFAULT;
-    private int n_trial = 7;
+    private int n_trial = 500;
     private int max_text_length = 10000;
     private double[] priorMap = null;
     private boolean verbose = false;
@@ -237,10 +238,12 @@ public class Detector {
 
         Random rand = new Random();
         if (seed != null) rand.setSeed(seed);
+        
+        
+        
         for (int t = 0; t < n_trial; ++t) {
             double[] prob = initProbability();
             double alpha = this.alpha + rand.nextGaussian() * ALPHA_WIDTH;
-
             for (int i = 0;; ++i) {
                 int r = rand.nextInt(ngrams.size());
                 updateLangProb(prob, ngrams.get(r), alpha);
@@ -253,7 +256,7 @@ public class Detector {
             if (verbose) System.out.println("==> " + sortProbability(prob));
         }
     }
-
+    
     /**
      * Initialize the map of language probabilities.
      * If there is the specified prior map, use it as initial map.
@@ -331,7 +334,7 @@ public class Detector {
 
     /**
      * @param probabilities HashMap
-     * @return lanugage candidates order by probabilities descendently
+     * @return language candidates order by probabilities descendently
      */
     private ArrayList<Language> sortProbability(double[] prob) {
         ArrayList<Language> list = new ArrayList<Language>();
