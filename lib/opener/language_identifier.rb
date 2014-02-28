@@ -9,6 +9,7 @@ import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
 require_relative 'language_identifier/cli'
+require_relative 'language_identifier/detector.rb'
 
 module Opener
   ##
@@ -45,7 +46,7 @@ module Opener
     #
     def initialize(options = {})
       @options = DEFAULT_OPTIONS.merge(options)
-      @detector = CybozuDetector.new("core/target/classes/profiles")
+      @detector = Detector.instance
     end
 
     ##
@@ -58,7 +59,7 @@ module Opener
     def run(input)
       output = @detector.detect(input)
       output = build_kaf(input, output) if @options[:kaf]
-      [output, nil, Status.new]
+      return output
     end
 
     alias identify run

@@ -8,5 +8,5 @@ def kernel_root
 end
 
 def kernel
-  Opener::LanguageIdentifier.new
+  Opener::LanguageIdentifier.new(:kaf=>false)
 end
