@@ -22,7 +22,6 @@ module Opener
     class Status; def success?; true; end; end
     attr_reader :options
 
-    @@detector = CybozuDetector.new("core/target/classes/profiles")
 
     ##
     # Hash containing the default options to use.
@@ -46,6 +45,7 @@ module Opener
     #
     def initialize(options = {})
       @options = DEFAULT_OPTIONS.merge(options)
+      @detector = CybozuDetector.new("core/target/classes/profiles")
     end
 
     ##
@@ -56,7 +56,7 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      output = @@detector.detect(input)
+      output = @detector.detect(input)
       output = build_kaf(input, output) if @options[:kaf]
       [output, nil, Status.new]
     end
