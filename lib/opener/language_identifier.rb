@@ -3,7 +3,7 @@ require 'optparse'
 require 'builder'
 require 'java'
 
-require 'core/target/LanguageDetection-0.0.1.jar'
+require_relative '../../core/target/LanguageDetection-0.0.1.jar'
 import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
 
 require_relative 'language_identifier/version'
