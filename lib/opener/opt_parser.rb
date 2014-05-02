@@ -20,15 +20,28 @@ module Opener
           options[:output_queue] = v
         end
 
-        opts.on("-b", "--batch-size BATCH_SIZE", "Request x messages at once") do |v|
+        opts.on("-b", "--batch-size BATCH_SIZE", Integer, "Request x messages at once where x is between 1 and 10") do |v|
           options[:batch_size] = v
         end
 
-        opts.on("-t", "--threads THREADS", "number of threads") do |v|
-          options[:threads] = v
+        opts.on("-w", "--workers NUMBER", Integer, "number of worker thread") do |v|
+          options[:workers] = v
+        end
+
+        opts.on("-r", "--readers NUMBER", Integer, "number of readers threads") do |v|
+          options[:readers] = v
+        end
+
+        opts.on("-p", "--writers NUMBER", Integer, "number of writers / pusher threads") do |v|
+          options[:writers] = v
+        end
+
+        opts.on("-l", "--logfile FILENAME", "Filename and path of logfile") do |v|
+          options[:pushers] = v
         end
 
         opts.separator ""
+
         opts.separator "Common options:"
 
         # No argument, shows at tail.  This will print an options summary.

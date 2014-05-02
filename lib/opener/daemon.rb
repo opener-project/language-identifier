@@ -7,34 +7,45 @@ Thread.abort_on_exception = true
 
 module Opener
     class Daemon
-      attr_reader :batch_size, :input_queue, :output_queue, :threads
-      attr_reader :visibility_timout, :input_buffer, :output_buffer, :consumers, :klass
-      attr_reader :logger
+      attr_reader :batch_size,
+                  :input_queue, :output_queue,
+                  :input_buffer, :output_buffer,
+                  :klass,
+                  :logger
+
+      attr_accessor :threads, :thread_counts
 
       def initialize(klass, options={})
         @input_queue        = OpenerSQS.new(options.fetch(:input_queue))
         @output_queue       = OpenerSQS.new(options.fetch(:output_queue))
-        @threads            = options.fetch(:threads, 5).to_i
-        @consumers          = []
 
-        @batch_size         = options.fetch(:batch_size, 10).to_i
-        @visibility_timeout = options.fetch(:visibilitiy_timeout, 60)
+        @threads = {}
+        @threads[:writers] = []
+        @threads[:readers] = []
+        @threads[:workers] = []
+
+        @thread_counts = {}
+        @thread_counts[:workers] = options.fetch(:workers, 1)
+        @thread_counts[:readers]  = options.fetch(:readers, 5)
+        @thread_counts[:writers]    = options.fetch(:writers, 1)
+
+        @batch_size           = options.fetch(:batch_size, 10)
 
         @input_buffer = Queue.new
         @output_buffer = Queue.new
-        @klass = klass
 
-        @logger = Logger.new(STDOUT)
+        @klass = klass
+        @logger = Logger.new(options.fetch(:logger, STDOUT))
       end
 
       def buffer_new_messages
         if input_buffer.size > buffer_size
-          logger.debug "Maximum input buffer size reached"
+          #logger.debug "Maximum input buffer size reached"
           return
         end
 
         if output_buffer.size > buffer_size
-          logger.debug "Maximum output buffer size reached"
+          #logger.debug "Maximum output buffer size reached"
           return
         end
 
@@ -42,37 +53,40 @@ module Opener
 
         return if messages.nil?
         messages.each do |message|
-          logger.debug "received message: #{message[:receipt_handle][0..10]}./\/\/.#{message[:receipt_handle][-10..-1]}."
           input_buffer << message
         end
       end
 
       def start
         #
-        # Load producer
+        # Load Readers
         #
-        producer = Thread.new do
-          logger.info "Producer ready for action..."
-          loop do
-            buffer_new_messages
-            sleep(1)
+        thread_counts[:readers].times do |t|
+          threads[:readers] << Thread.new do
+            logger.info "Producer #{t+1} ready for action..."
+            loop do
+              buffer_new_messages
+            end
           end
         end
 
         #
-        # Load actual workers
+        # Load Workers
         #
-        threads.times do |t|
-          consumers << Thread.new do
-            logger.info "Consumer #{t+1} launching..."
+        thread_counts[:workers].times do |t|
+          threads[:workers] << Thread.new do
+            logger.info "Worker #{t+1} launching..."
             identifier = klass.new
             loop do
               message = input_buffer.pop
 
               input = JSON.parse(message[:body])["input"]
-              output = identifier.run(input)
-              logger.debug "processed message: #{message[:receipt_handle][0..10]}./\/\/.#{message[:receipt_handle][-10..-1]}."
-
+              begin
+                output = identifier.run(input)
+              rescue Exception => e
+                logger.error(e)
+                output = input
+              end
               output_buffer.push({ :output=>output,
                                    :handle=>message[:receipt_handle]})
             end
@@ -80,26 +94,35 @@ module Opener
         end
 
         #
-        # Load pusher to Amazon
+        # Load Writers
         #
-        pusher = Thread.new do
-          logger.info "Pusher ready for action..."
-          loop do
-            message = output_buffer.pop
+        thread_counts[:writers].times do |t|
+          threads[:writers] << Thread.new do
+            logger.info "Pusher #{t+1} ready for action..."
+            loop do
+              message = output_buffer.pop
 
-            payload = {:input=>message[:output]}.to_json
-            output_queue.send_message(payload)
-            input_queue.delete_message(message[:handle])
+              payload = {:input=>message[:output]}.to_json
+              output_queue.send_message(payload)
+              input_queue.delete_message(message[:handle])
+            end
           end
         end
 
-        consumers.each(&:join)
-        producer.join
-        pusher.join
+        reporter = Thread.new do
+          loop do
+            logger.debug "input buffer: #{input_buffer.size} \t output buffer: #{output_buffer.size}"
+            sleep(2)
+          end
+        end
+
+        threads[:writers].each(&:join)
+        threads[:readers].each(&:join)
+        threads[:workers].each(&:join)
       end
 
       def buffer_size
-        2 * batch_size
+        4 * batch_size
       end
 
       class OpenerSQS
