@@ -19,11 +19,10 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'builder'
   gem.add_dependency 'sinatra', '~>1.4.2'
   gem.add_dependency 'httpclient'
-  gem.add_dependency 'opener-build-tools'
   gem.add_dependency 'uuidtools'
+  gem.add_dependency 'opener-build-tools'
   gem.add_dependency 'opener-webservice'
-  gem.add_dependency 'aws-sdk-core'
-  gem.add_dependency 'spoon'
+  gem.add_dependency 'opener-daemons'
 
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cucumber'

@@ -1,7 +1,9 @@
-require_relative '../lib/opener/daemon'
-require_relative '../lib/opener/opt_parser'
-require_relative '../lib/opener/language_identifier'
+#!/usr/bin/env jruby
+#
+require 'opener/daemons'
+require 'opener/language_identifier'
 
-options = Opener::OptParser.parse!(ARGV)
-daemon = Opener::Daemon.new(Opener::LanguageIdentifier, options)
+options = Opener::Daemons::OptParser.parse!(ARGV)
+daemon = Opener::Daemons::Daemon.new(Opener::LanguageIdentifier, options)
+$0 = "OpeNER Language Identifier Daemon"
 daemon.start
