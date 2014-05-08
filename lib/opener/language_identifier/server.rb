@@ -24,14 +24,7 @@ module Opener
       def analyze(options)
         processor = text_processor.new(options)
         output    = processor.run(options[:input])
-
-        if processor.respond_to?(:output_type)
-          type = processor.output_type
-        else
-          type = :xml
-        end
-
-        output[1] = type
+        
         return output
       end
     end # Server
