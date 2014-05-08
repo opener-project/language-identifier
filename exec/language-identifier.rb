@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 #
+require 'rubygems'
 require 'opener/daemons'
 require 'opener/language_identifier'
 

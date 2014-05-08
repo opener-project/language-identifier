@@ -1,6 +1,6 @@
 require File.expand_path('../lib/opener/language_identifier/version', __FILE__)
 
-generated = Dir.glob('core/target/LanguageDetection-*.jar')
+generated = Dir.glob('core/target/LanguageDetection-*.jar') + Dir.glob('core/target/classes/**/*')
 
 Gem::Specification.new do |gem|
   gem.name                  = 'opener-language-identifier'
