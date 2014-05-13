@@ -8,10 +8,9 @@ KAF document containing the language and raw input text.
 
 ## Quick Use Overview
 
-Install the Gem using Specific Install
+Install the Gem
 
-    gem specific_install opener-language-identifier \
-        -l https://github.com/opener-project/language-identifier.git
+    gem opener-language-identifier
 
 If you dont have specific\_install already, install it first:
 
