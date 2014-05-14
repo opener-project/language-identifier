@@ -11,3 +11,5 @@ Gemfile.lock
 
 core/target
 core/dependency-reduced-pom.xml
+
+!.gitkeep
