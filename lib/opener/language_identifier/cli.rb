@@ -5,6 +5,7 @@ module Opener
     #
     # @!attribute [r] options
     #  @return [Hash]
+    #
     # @!attribute [r] option_parser
     #  @return [OptionParser]
     #

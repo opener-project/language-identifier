@@ -6,8 +6,10 @@ module Opener
     #
     # @!attribute [r] xml
     #  @return [Builder::XmlMarkup]
+    #
     # @!attribute [r] original_text
     #  @return [String]
+    #
     # @!attribute [r] language
     #  @return [String]
     #

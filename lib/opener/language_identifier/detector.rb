@@ -21,8 +21,6 @@ module Opener
       def profiles_path
         File.expand_path("../../../../core/target/classes/profiles", __FILE__)
       end
-
     end
   end
 end
-

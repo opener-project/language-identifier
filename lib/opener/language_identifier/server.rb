@@ -24,7 +24,7 @@ module Opener
       def analyze(options)
         processor = text_processor.new(options)
         output    = processor.run(options[:input])
-        
+
         return output
       end
     end # Server

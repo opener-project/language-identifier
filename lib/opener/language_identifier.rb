@@ -20,9 +20,7 @@ module Opener
   #  @return [Hash]
   #
   class LanguageIdentifier
-    class Status; def success?; true; end; end
     attr_reader :options
-
 
     ##
     # Hash containing the default options to use.
@@ -39,8 +37,10 @@ module Opener
     #
     # @option options [Array] :args Arbitrary arguments to pass to the
     #  underlying kernel.
+    #
     # @option options [TrueClass|FalseClass] :extended When set to `true`
     #  extended language detection will be enabled.
+    #
     # @option options [TrueClass|FalseClass] :kaf When set to `true` the
     #  results will be displayed as KAF.
     #
@@ -59,6 +59,7 @@ module Opener
     def run(input)
       output = @detector.detect(input)
       output = build_kaf(input, output) if @options[:kaf]
+
       return output
     end
 
