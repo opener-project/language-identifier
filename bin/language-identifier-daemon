@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
-#
-require 'rubygems'
+
 require 'opener/daemons'
 
 exec_path = File.expand_path("../../exec/language-identifier.rb", __FILE__)
-Opener::Daemons::Controller.new(:name=>"language-identifier",
-                                :exec_path=>exec_path)
+
+Opener::Daemons::Controller.new(
+  :name      => "language-identifier",
+  :exec_path => exec_path
+)
