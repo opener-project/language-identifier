@@ -8,13 +8,9 @@ KAF document containing the language and raw input text.
 
 ## Quick Use Overview
 
-Install the Gem
+Install the Gem:
 
-    gem opener-language-identifier
-
-If you dont have specific\_install already, install it first:
-
-    gem intall specific_install
+    gem install opener-language-identifier
 
 You should now be able to call the language indentifier as a regular shell
 command, by its name. Once installed as a gem you can access the gem from
@@ -92,16 +88,14 @@ webservice type:
     language-identifier-server
 
 This will launch a mini webserver with the webservice. It defaults to port 9292,
-so you can access it at:
+so you can access it at <http://localhost:9292>.
 
-    http://localhost:9292
-
-To launch it on a different port provide the ```-p [port-number]``` option like
+To launch it on a different port provide the `-p [port-number]` option like
 this:
 
     language-identifier-server -p 1234
 
-It then launches at ```http://localhost:1234```
+It then launches at <http://localhost:1234>
 
 Documentation on the Webservice is provided by surfing to the urls provided
 above.
