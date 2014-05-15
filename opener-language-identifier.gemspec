@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
 
   gem.add_dependency 'builder'
+  gem.add_dependency 'puma'
   gem.add_dependency 'sinatra', '~>1.4.2'
   gem.add_dependency 'httpclient'
   gem.add_dependency 'uuidtools'
