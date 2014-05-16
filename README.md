@@ -26,7 +26,6 @@ Install the Gem:
 
 Make sure you run ```jruby``` since the language-identifier uses Java.
 
-
 ### Command line interface
 
 You should now be able to call the language indentifier as a regular shell
@@ -83,7 +82,6 @@ information type:
 
     $ language-identifier-daemon -h
 
-
 Description of dependencies
 ---------------------------
 
@@ -106,7 +104,6 @@ At least you need the following system setup:
 
 * Maven (for building the Gem)
 
-
 Language Extension
 ------------------
 
@@ -122,8 +119,8 @@ actual working component.
 Where to go from here
 ---------------------
 
-* Check the reference documentation 
-* Checkout the webservice
+* Check (the project websitere)[http://opener-project.github.io]
+* (Checkout the webservice)[http://opener.olery.com/language-identifier]
 
 Report problem/Get help
 -----------------------
