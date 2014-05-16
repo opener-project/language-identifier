@@ -30,6 +30,11 @@ module Opener
             @options[:kaf] = v
           end
 
+          opts.on('-p', '--probs', 'Provide probabilities, assumes --no-kaf') do
+            @options[:kaf] = false
+            @options[:probs] = true
+          end
+
           opts.separator <<-EOF
 
 Examples:
