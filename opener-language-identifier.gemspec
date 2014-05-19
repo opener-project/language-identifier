@@ -13,12 +13,12 @@ Gem::Specification.new do |gem|
   gem.files = Dir.glob([
     'core/target/LanguageDetection-*.jar',
     'core/target/classes/**/*.*',
-    'exec/*',
-    'lib/**/*.*',
+    'exec/**/*',
+    'lib/**/*',
     'config.ru',
     '*.gemspec',
     'README.md'
-  ])
+  ]).select { |file| File.file?(file) }
 
   gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
 
