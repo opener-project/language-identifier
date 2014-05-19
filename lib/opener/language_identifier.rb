@@ -57,8 +57,12 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      output = @detector.detect(input)
-      output = build_kaf(input, output) if @options[:kaf]
+      if options[:probs]
+        output = @detector.probabilities(input)
+      else
+        output = @detector.detect(input)
+        output = build_kaf(input, output) if @options[:kaf]
+      end
 
       return output
     end

@@ -22,16 +22,17 @@ module Opener
           opts.program_name   = 'language-identifier'
           opts.summary_indent = '  '
 
-          opts.on('-h', '--help', 'Shows this help message') do
-            show_help
-          end
-
           opts.on('-v', '--version', 'Shows the current version') do
             show_version
           end
 
-          opts.on('-k', '--kaf', 'Output the language as KAF') do
-            @options[:kaf] = true
+          opts.on('-k', '--[no-]kaf', 'Output the language as KAF') do |v|
+            @options[:kaf] = v
+          end
+
+          opts.on('-p', '--probs', 'Provide probabilities, assumes --no-kaf') do
+            @options[:kaf] = false
+            @options[:probs] = true
           end
 
           opts.separator <<-EOF
@@ -42,7 +43,6 @@ Examples:
 
 Languages:
 
-  * af	Afrikaans
   * ar	Arabic
   * bg	Bulgarian
   * bn	Bengali
@@ -96,6 +96,15 @@ Languages:
   * zh-cn	Simplified Chinese
   * zh-tw	Traditional Chinese
           EOF
+
+          opts.separator ""
+          opts.separator "Common options:"
+          # No argument, shows at tail.  This will print an options summary.
+          # Try it and see!
+          opts.on_tail("-h", "--help", "Show this message.") do
+            puts opts
+            exit
+          end
         end
       end
 
@@ -104,18 +113,10 @@ Languages:
       #
       def run(input)
         option_parser.parse!(options[:args])
-
         identifier = LanguageIdentifier.new(options)
 
-        stdout, stderr, process = identifier.run(input)
-
-        if process.success?
-          puts stdout
-
-          STDERR.puts(stderr) unless stderr.empty?
-        else
-          abort stderr
-        end
+        output = identifier.run(input)
+        puts output
       end
 
       private
