@@ -29,9 +29,9 @@ Make sure you run ```jruby``` since the language-identifier uses Java.
 ### Command line interface
 
 You should now be able to call the language indentifier as a regular shell
-command, by its name. Once installed as a gem you can access the gem from
-anywhere. This aplication reads a text from standard input in order to
-identify the language.
+command: by its name. Once installed the gem normalyl sits in your path so you can call it directly from anywhere.
+
+This aplication reads a text from standard input in order to identify the language.
 
     echo "This is an English text." | language-identifier
 
@@ -96,9 +96,8 @@ At least you need the following system setup:
 ### Depenencies for normal use:
 
 * Python 2.6 - PIP, possibly VirtualEnv
-* MRI 1.9.3 / Jruby
+* Jruby
 * Java 1.7 or newer (There are problems with encoding in older versions).
-* Ruby 1.9.3 or newer
 
 ### Dependencies if you want to modify the component:
 
@@ -119,7 +118,7 @@ actual working component.
 Where to go from here
 ---------------------
 
-* Check (the project websitere)[http://opener-project.github.io]
+* Check (the project website)[http://opener-project.github.io]
 * (Checkout the webservice)[http://opener.olery.com/language-identifier]
 
 Report problem/Get help
