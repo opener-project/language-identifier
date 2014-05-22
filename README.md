@@ -29,7 +29,7 @@ Make sure you run ```jruby``` since the language-identifier uses Java.
 ### Command line interface
 
 You should now be able to call the language indentifier as a regular shell
-command: by its name. Once installed the gem normalyl sits in your path so you can call it directly from anywhere.
+command: by its name. Once installed the gem normally sits in your path so you can call it directly from anywhere.
 
 This aplication reads a text from standard input in order to identify the language.
 
@@ -93,7 +93,7 @@ Website)[http://opener-project.github.io/getting-started/how-to/local-installati
 
 At least you need the following system setup:
 
-### Depenencies for normal use:
+### Dependencies for normal use:
 
 * Python 2.6 - PIP, possibly VirtualEnv
 * Jruby
