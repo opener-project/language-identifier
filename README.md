@@ -37,11 +37,10 @@ This aplication reads a text from standard input in order to identify the langua
 
 This will output:
 
-```
+```xml
     <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <KAF xml:lang="en" version="2.1">
-         <raw>This is an English text.
-    </raw>
+        <raw>This is an English text.</raw>
     </KAF>
 ```
 
