@@ -13,6 +13,7 @@ Gem::Specification.new do |gem|
   gem.files = Dir.glob([
     'core/target/LanguageDetection-*.jar',
     'core/target/classes/**/*.*',
+    'core/target/classes/**/*',
     'exec/**/*',
     'lib/**/*',
     'config.ru',
