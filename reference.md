@@ -23,11 +23,11 @@ echo "This is english text." | language-identifier    # Defaults to KAF output
 ```
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<KAF xml:lang="en" version="2.1">
-  <raw>This is english text.
-</raw>
-</KAF>
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+ <KAF xml:lang="en" version="2.1">
+   <raw>This is english text.
+ </raw>
+ </KAF>
 ```
 
 ##### Output Probabilities
@@ -88,9 +88,9 @@ webserver used by the component. The options are:
 The daemon has the default OpeNER daemon options. Being:
 
 ```
-Usage: language-identifier <start|stop|restart> [options]
+ Usage: language-identifier <start|stop|restart> [options]
 
-When calling language-identifier without <start|stop|restart> the daemon will start as a foreground process
+ When calling language-identifier without <start|stop|restart> the daemon will start as a foreground process
 
 ```
 
