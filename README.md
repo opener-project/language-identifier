@@ -106,13 +106,14 @@ At least you need the following system setup:
 Language Extension
 ------------------
 
-  TODO
+The internal library that actually performs the language identification already supports a lot of languages. 
+For more information about how to extends it for more languages or functionalities, please, visit the website of the tool at <a href="https://code.google.com/p/language-detection/">https://code.google.com/p/language-detection/</a>
 
 The Core
 --------
   
 The component is a fat wrapper around the actual language technology core.
-Written Java. Checkout the core/src directory of the package to get to the
+Written in Java. Checkout the core/src directory of the package to get to the
 actual working component.
 
 Where to go from here
