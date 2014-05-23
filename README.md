@@ -105,6 +105,7 @@ The component is a fat wrapper around the actual language technology core.
 Written in Java. Checkout the core/src directory of the package to get to the
 actual working component.
 
+
 Where to go from here
 ---------------------
 
