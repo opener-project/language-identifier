@@ -2,12 +2,9 @@
 
 # Language Identifier
 
-The language identifier takes raw text and tries to figure out what language it
-was written in. The output can either be a plain-text i18n language code or a basic
-KAF document containing the language and raw input text.
+The language identifier takes raw text and tries to figure out what language it was written in. The output can either be a plain-text i18n language code or a basic KAF document containing the language and raw input text.
 
-The output of the language identifier can then be used to drive further text
-analysis of for example sentiments and or entities.
+The output of the language identifier can then be used to drive further text analysis of for example sentiments and or entities.
 
 ### Confused by some terminology?
 
