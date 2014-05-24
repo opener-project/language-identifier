@@ -22,6 +22,7 @@ module Opener
       # @raise RunetimeError Raised when the tagging process failed.
       #
       def analyze(options)
+        options[:kaf] = true if options[:kaf].nil?
         processor = text_processor.new(options)
         output    = processor.run(options[:input])
 
