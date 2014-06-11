@@ -1,29 +1,13 @@
 require 'bundler/gem_tasks'
-require 'opener/build-tools'
-require 'opener/build-tools/tasks/java'
+require 'rake/clean'
+require 'cliver'
 
-include Opener::BuildTools::Requirements
-include Opener::BuildTools::Java
+CLEAN.include('tmp/*')
 
-CORE_DIRECTORY = File.expand_path('../core', __FILE__)
-
-desc 'Verifies the requirements'
-task :requirements do
-  require_executable('java')
-  require_version('java', java_version, '1.7.0')
-  require_executable('mvn')
+Dir.glob(File.expand_path('../task/*.rake', __FILE__)) do |task|
+  import(task)
 end
 
-desc 'Alias for java:compile'
-task :compile => [:requirements, 'java:compile']
-
-desc 'Runs the tests'
-task :test => :compile do
-  sh 'cucumber features'
-end
-
-desc 'Cleans the repository'
-task :clean => ['java:clean:packages']
-
+task :clean   => 'java:clean'
 task :build   => :compile
 task :default => :test
