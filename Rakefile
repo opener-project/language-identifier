@@ -2,7 +2,7 @@ require 'bundler/gem_tasks'
 require 'rake/clean'
 require 'cliver'
 
-CLEAN.include('tmp/*')
+CLEAN.include('tmp/*', 'pkg')
 
 Dir.glob(File.expand_path('../task/*.rake', __FILE__)) do |task|
   import(task)
