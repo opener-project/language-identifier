@@ -90,9 +90,8 @@ At least you need the following system setup:
 
 ### Dependencies for normal use:
 
-* Python 2.6 - PIP, possibly VirtualEnv
-* Jruby
-* Java 1.7 or newer (There are problems with encoding in older versions).
+* JRuby 1.7 or newer
+* Java 1.7 or newer (there are problems with encodings in older versions).
 
 ### Dependencies if you want to modify the component:
 
