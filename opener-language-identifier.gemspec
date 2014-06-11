@@ -32,7 +32,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'opener-webservice'
   gem.add_dependency 'opener-daemons'
 
-  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec', '~> 3.0'
   gem.add_development_dependency 'cucumber'
   gem.add_development_dependency 'rake'
 end
