@@ -9,6 +9,7 @@ import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
 require_relative 'language_identifier/cli'
+require_relative 'language_identifier/error_layer'
 require_relative 'language_identifier/detector.rb'
 
 module Opener
@@ -57,14 +58,19 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      if options[:probs]
-        output = @detector.probabilities(input)
-      else
-        output = @detector.detect(input)
-        output = build_kaf(input, output) if @options[:kaf]
-      end
+      begin
+        if options[:probs]
+            output = @detector.probabilities(input)
+          else
+            output = @detector.detect(input)
+            output = build_kaf(input, output) if @options[:kaf]
+        end
 
-      return output
+        return output
+        
+      rescue Exception => error
+        return ErrorLayer.new(input, error.message, self.class).add
+      end
     end
 
     alias identify run
