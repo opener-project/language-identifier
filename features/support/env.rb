@@ -1,5 +1,5 @@
 require_relative '../../lib/opener/language_identifier'
-require 'rspec/expectations'
+require 'rspec'
 require 'tempfile'
 
 def kernel_root
@@ -8,4 +8,14 @@ end
 
 def kernel
   Opener::LanguageIdentifier.new(:kaf=>false)
+end
+
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
+
+  config.mock_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
 end

@@ -12,7 +12,6 @@ Gem::Specification.new do |gem|
 
   gem.files = Dir.glob([
     'core/target/LanguageDetection-*.jar',
-    'core/target/classes/**/*.*',
     'core/target/classes/**/*',
     'exec/**/*',
     'lib/**/*',
@@ -28,12 +27,12 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sinatra', '~>1.4.2'
   gem.add_dependency 'httpclient'
   gem.add_dependency 'uuidtools'
-  gem.add_dependency 'opener-build-tools'
   gem.add_dependency 'opener-webservice'
   gem.add_dependency 'opener-daemons'
   gem.add_dependency 'nokogiri'
 
-  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'rspec', '~> 3.0'
   gem.add_development_dependency 'cucumber'
   gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'cliver'
 end
