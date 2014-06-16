@@ -31,8 +31,12 @@ module Opener
           end
 
           opts.on('-p', '--probs', 'Provide probabilities, assumes --no-kaf') do
-            @options[:kaf] = false
+            @options[:kaf]   = false
             @options[:probs] = true
+          end
+
+          opts.on('-b', '--benchmark', 'Include benchmarking output') do
+            @options[:benchmark] = true
           end
 
           opts.separator <<-EOF

@@ -2,6 +2,7 @@ require 'open3'
 require 'optparse'
 require 'builder'
 require 'java'
+require 'opener/core'
 
 require_relative '../../core/target/LanguageDetection-0.0.1.jar'
 import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
@@ -29,8 +30,9 @@ module Opener
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
-      :args => [],
-      :kaf  => true
+      :args      => [],
+      :kaf       => true,
+      :benchmark => false
     }.freeze
 
     ##
@@ -39,11 +41,11 @@ module Opener
     # @option options [Array] :args Arbitrary arguments to pass to the
     #  underlying kernel.
     #
-    # @option options [TrueClass|FalseClass] :extended When set to `true`
-    #  extended language detection will be enabled.
-    #
     # @option options [TrueClass|FalseClass] :kaf When set to `true` the
     #  results will be displayed as KAF.
+    #
+    # @option options [TrueClass|FalseClass] :benchmark When set to `true`
+    #  benchmarking output will be added to the KAF document.
     #
     def initialize(options = {})
       @options = DEFAULT_OPTIONS.merge(options)
@@ -58,19 +60,26 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      begin
+      output    = nil
+      benchmark = Opener::Core::Benchmark.new('opener-language-identifier')
+
+      results = benchmark.measure do
         if options[:probs]
           output = @detector.probabilities(input)
         else
           output = @detector.detect(input)
-          output = build_kaf(input, output) if @options[:kaf]
+          output = build_kaf(input, output) if options[:kaf]
         end
-
-        return output
-
-      rescue Exception => error
-        return ErrorLayer.new(input, error.message, self.class).add
       end
+
+      if options[:kaf] and options[:benchmark]
+        output = benchmark.write(output, results)
+      end
+
+      return output
+
+    rescue Exception => error
+      return ErrorLayer.new(input, error.message, self.class).add
     end
 
     alias identify run
