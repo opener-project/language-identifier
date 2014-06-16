@@ -60,14 +60,14 @@ module Opener
     def run(input)
       begin
         if options[:probs]
-            output = @detector.probabilities(input)
-          else
-            output = @detector.detect(input)
-            output = build_kaf(input, output) if @options[:kaf]
+          output = @detector.probabilities(input)
+        else
+          output = @detector.detect(input)
+          output = build_kaf(input, output) if @options[:kaf]
         end
 
         return output
-        
+
       rescue Exception => error
         return ErrorLayer.new(input, error.message, self.class).add
       end
