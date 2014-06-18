@@ -22,7 +22,7 @@
 
     <p>* required</p>
     <p>** When entering a value no response will be displayed in the browser.</p>
-    <form action="<%= URI(request.url).path %>" method="POST">
+    <form action="<%= request.url.split('?').first %>" method="POST">
       <div>
         <label for="input"/>Type your text here*</label>
         <br/>
