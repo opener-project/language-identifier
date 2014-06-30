@@ -29,9 +29,8 @@ module Opener
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
-      :args      => [],
-      :kaf       => true,
-      :benchmark => false
+      :args => [],
+      :kaf  => true
     }.freeze
 
     ##
@@ -42,9 +41,6 @@ module Opener
     #
     # @option options [TrueClass|FalseClass] :kaf When set to `true` the
     #  results will be displayed as KAF.
-    #
-    # @option options [TrueClass|FalseClass] :benchmark When set to `true`
-    #  benchmarking output will be added to the KAF document.
     #
     def initialize(options = {})
       @options = DEFAULT_OPTIONS.merge(options)
@@ -59,20 +55,11 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      output    = nil
-      benchmark = Opener::Core::Benchmark.new('opener-language-identifier')
-
-      results = benchmark.measure do
-        if options[:probs]
-          output = @detector.probabilities(input)
-        else
-          output = @detector.detect(input)
-          output = build_kaf(input, output) if options[:kaf]
-        end
-      end
-
-      if options[:kaf] and options[:benchmark]
-        output = benchmark.write(output, results)
+      if options[:probs]
+        output = @detector.probabilities(input)
+      else
+        output = @detector.detect(input)
+        output = build_kaf(input, output) if options[:kaf]
       end
 
       return output

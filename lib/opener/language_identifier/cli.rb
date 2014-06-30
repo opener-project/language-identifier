@@ -35,10 +35,6 @@ module Opener
             @options[:probs] = true
           end
 
-          opts.on('-b', '--benchmark', 'Include benchmarking output') do
-            @options[:benchmark] = true
-          end
-
           opts.separator <<-EOF
 
 Examples:
