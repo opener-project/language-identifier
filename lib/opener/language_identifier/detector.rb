@@ -4,6 +4,11 @@ import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
 
 module Opener
   class LanguageIdentifier
+    ##
+    # Singleton class wrapped around the Cybozu detector. The Cybozu code uses
+    # the factory pattern and stores a bunch of things on class level. As such
+    # the Cybozu code is *not* thread-safe.
+    #
     class Detector
       attr_reader :options
 
