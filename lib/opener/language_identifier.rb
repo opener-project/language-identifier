@@ -29,8 +29,9 @@ module Opener
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
-      :args => [],
-      :kaf  => true
+      :args  => [],
+      :kaf   => true,
+      :probs => false
     }.freeze
 
     ##
@@ -41,6 +42,9 @@ module Opener
     #
     # @option options [TrueClass|FalseClass] :kaf When set to `true` the
     #  results will be displayed as KAF.
+    #
+    # @option options [TrueClass|FalseClass] :probs Wen set the probabilities
+    #  are returned instead of the language/KAF.
     #
     def initialize(options = {})
       @options = DEFAULT_OPTIONS.merge(options)
