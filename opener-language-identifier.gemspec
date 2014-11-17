@@ -30,8 +30,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sinatra', '~>1.4.2'
   gem.add_dependency 'httpclient'
   gem.add_dependency 'uuidtools'
-  gem.add_dependency 'opener-webservice'
-  gem.add_dependency 'opener-daemons'
+  gem.add_dependency 'opener-webservice', '~> 2.0'
+  gem.add_dependency 'opener-daemons', '~> 2.1'
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'opener-core', '~> 1.0'
 
