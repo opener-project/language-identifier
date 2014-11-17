@@ -10,7 +10,7 @@ module Opener
     class Server < Webservice
       set :views, File.expand_path('../views', __FILE__)
       text_processor LanguageIdentifier
-      accepted_params :input, :kaf, :benchmark
+      accepted_params :input, :kaf
 
       ##
       # Gets the Analyzed output of an input.
