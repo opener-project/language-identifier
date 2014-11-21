@@ -1,5 +1,5 @@
 module Opener
   class LanguageIdentifier
-    VERSION = "3.1.7"
+    VERSION = "4.0.0"
   end
 end

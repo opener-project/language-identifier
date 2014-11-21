@@ -2,7 +2,6 @@ require 'open3'
 require 'optparse'
 require 'builder'
 require 'java'
-require 'opener/core'
 
 require_relative '../../core/target/LanguageDetection-0.0.1.jar'
 import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
@@ -67,9 +66,6 @@ module Opener
       end
 
       return output
-
-    rescue Exception => error
-      return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
     end
 
     alias identify run

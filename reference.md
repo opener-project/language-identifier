@@ -35,34 +35,16 @@ You can launch a webservice by executing:
 After launching the server, you can reach the webservice at
 <http://localhost:9292>.
 
-The webservice takes several options that get passed along to [Puma](http://puma.io), the
-webserver used by the component. The options are:
+The webservice takes several options that get passed along to
+[Puma](http://puma.io), the webserver used by the component. The options are:
 
-    -b, --bind URI                   URI to bind to (tcp://, unix://, ssl://)
-    -C, --config PATH                Load PATH as a config file
-        --control URL                The bind url to use for the control server
-                                         Use 'auto' to use temp unix server
-        --control-token TOKEN        The token to use as authentication for the control server
-    -d, --daemon                     Daemonize the server into the background
-        --debug                      Log lowlevel debugging information
-        --dir DIR                    Change to DIR before starting
-    -e, --environment ENVIRONMENT    The environment to run the Rack app on (default development)
-    -I, --include PATH               Specify $LOAD_PATH directories
-    -p, --port PORT                  Define the TCP port to bind to
-                                     Use -b for more advanced options
-        --pidfile PATH               Use PATH as a pidfile
-        --preload                    Preload the app. Cluster mode only
-        --prune-bundler              Prune out the bundler env if possible
-    -q, --quiet                      Quiet down the output
-    -R, --restart-cmd CMD            The puma command to run during a hot restart
-                                     Default: inferred
-    -S, --state PATH                 Where to store the state details
-    -t, --threads INT                min:max threads to use (default 0:16)
-        --tcp-mode                   Run the app in raw TCP mode instead of HTTP mode
-    -V, --version                    Print the version information
-    -w, --workers COUNT              Activate cluster mode: How many worker processes to create
-        --tag NAME                   Additional text to display in process listing
-    -h, --help                       Show help
+    -h, --help                Shows this help message
+        --puma-help           Shows the options of Puma
+    -b, --bucket              The S3 bucket to store output in
+        --authentication      An authentication endpoint to use
+        --secret              Parameter name for the authentication secret
+        --token               Parameter name for the authentication token
+        --disable-syslog      Disables Syslog logging (enabled by default)
 
 ### Daemon
 
