@@ -2,10 +2,12 @@
 
 ### Command Line Interface
 
-    Usage: language-identifier [options]
-      -v, --version                    Shows the current version
-      -k, --[no-]kaf                   Output the language as KAF
-      -p, --probs                      Provide probabilities, assumes --no-kaf
+The CLI takes the following options:
+
+    -v, --version      Shows the current version
+        --no-kaf       Disables KAF output
+    -p, --probs        Displays probabilities instead of a language code
+    -h, --help         Display this help message.
 
 #### Examples:
 

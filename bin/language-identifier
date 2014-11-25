@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
+
 require_relative '../lib/opener/language_identifier'
 
-cli = Opener::LanguageIdentifier::CLI.new(:args => ARGV)
+cli = Opener::LanguageIdentifier::CLI.new
 
-puts cli.run(STDIN.tty? ? nil : STDIN.read)
+cli.run

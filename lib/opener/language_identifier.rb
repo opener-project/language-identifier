@@ -1,7 +1,7 @@
-require 'open3'
-require 'optparse'
-require 'builder'
 require 'java'
+require 'open3'
+require 'slop'
+require 'builder'
 
 require_relative '../../core/target/LanguageDetection-0.0.1.jar'
 import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
