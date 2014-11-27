@@ -50,28 +50,4 @@ describe Opener::LanguageIdentifier do
       @document.xpath('//KAF/raw')[0].text.should == @input
     end
   end
-
-  context 'error handling' do
-    before do
-      detector = described_class.new
-
-      detector.stub(:options).and_raise('Foobar')
-
-      @document = Nokogiri::XML(detector.run(@input))
-    end
-
-    example 'add the error message to the KAF document' do
-      @document.xpath('//KAF/errors/error')[0].text.should == 'Foobar'
-    end
-
-    example 'add the component class to the error node' do
-      @document.xpath('//KAF/errors/error')[0].attr('class') \
-        .should == described_class.to_s
-    end
-
-    example 'add the component version to the error node' do
-      @document.xpath('//KAF/errors/error')[0].attr('version') \
-        .should == Opener::LanguageIdentifier::VERSION
-    end
-  end
 end

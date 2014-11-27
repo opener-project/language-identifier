@@ -1,3 +1,5 @@
+require 'nokogiri'
+
 require_relative '../lib/opener/language_identifier'
 
 RSpec.configure do |config|
