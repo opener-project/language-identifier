@@ -1,5 +1,4 @@
 desc 'Runs the tests'
 task :test => :compile do
-  sh('cucumber features')
-  sh('rspec spec')
+  sh 'rspec spec'
 end
