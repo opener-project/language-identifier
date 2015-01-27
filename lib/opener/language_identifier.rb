@@ -2,9 +2,9 @@ require 'java'
 require 'open3'
 require 'slop'
 require 'builder'
+require 'singleton'
 
 require_relative '../../core/target/LanguageDetection-0.0.1.jar'
-import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
 
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
@@ -46,7 +46,7 @@ module Opener
     #  are returned instead of the language/KAF.
     #
     def initialize(options = {})
-      @options = DEFAULT_OPTIONS.merge(options)
+      @options  = DEFAULT_OPTIONS.merge(options)
       @detector = Detector.instance
     end
 
