@@ -4,7 +4,7 @@ require 'slop'
 require 'builder'
 require 'singleton'
 
-require_relative '../../core/target/LanguageDetection-0.0.1.jar'
+require_relative '../../core/target/LanguageDetection-1.0.0.jar'
 
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'

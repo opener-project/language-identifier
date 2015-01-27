@@ -1,7 +1,3 @@
-require 'singleton'
-
-import 'org.vicomtech.opennlp.LanguageDetection.CybozuDetector'
-
 module Opener
   class LanguageIdentifier
     ##
@@ -14,28 +10,55 @@ module Opener
 
       include Singleton
 
-      def initialize(options={})
-        @options = options
-        @detector = CybozuDetector.new(profiles_path)
+      ##
+      # Path to the directory containing the default profiles.
+      #
+      # @return [String]
+      #
+      DEFAULT_PATH = File.expand_path(
+        '../../../../core/target/classes/profiles',
+        __FILE__
+      )
+
+      def initialize(options = {})
+        @options   = options
         @semaphore = Mutex.new
+
+        com.cybozu.labs.langdetect.DetectorFactory.load_profile(profiles_path)
       end
 
       def detect(input)
         @semaphore.synchronize do
-          @detector.detect(input)
+          new_detector(input).detect
         end
       end
 
       def probabilities(input)
         @semaphore.synchronize do
-          result = @detector.detect_langs(input)
+          new_detector(input).get_probabilities
         end
       end
 
-      def profiles_path
-        default_path = File.expand_path("../../../../core/target/classes/profiles", __FILE__)
-        options.fetch(:profiles_path, default_path)
+      ##
+      # Returns a new detector with the profiles set based on the input.
+      #
+      # @param [String] input
+      # @return [CybozuDetector]
+      #
+      def new_detector(input)
+        detector = com.cybozu.labs.langdetect.DetectorFactory.create
+
+        detector.append(input)
+
+        return detector
       end
-    end
-  end
-end
+
+      ##
+      # @return [String]
+      #
+      def profiles_path
+        return options[:profiles_path] || DEFAULT_PATH
+      end
+    end # Detector
+  end # LanguageIdentifier
+end # Opener
