@@ -6,7 +6,6 @@ import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.Formatter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -64,8 +63,8 @@ public class Detector {
     private static final int BASE_FREQ = 10000;
     private static final String UNKNOWN_LANG = "unknown";
 
-    private static final Pattern URL_REGEX = Pattern.compile("https?://[-_.?&~;+=/#0-9A-Za-z]+");
-    private static final Pattern MAIL_REGEX = Pattern.compile("[-_.0-9A-Za-z]+@[-_0-9A-Za-z]+[-_.0-9A-Za-z]+");
+    private static final Pattern URL_REGEX = Pattern.compile("https?://[-_.?&~;+=/#0-9A-Za-z]{1,2076}");
+    private static final Pattern MAIL_REGEX = Pattern.compile("[-_.0-9A-Za-z]{1,64}@[-_0-9A-Za-z]{1,255}[-_.0-9A-Za-z]{1,255}");
     
     private final HashMap<String, double[]> wordLangProbMap;
     private final ArrayList<String> langlist;
@@ -74,7 +73,7 @@ public class Detector {
     private double[] langprob = null;
 
     private double alpha = ALPHA_DEFAULT;
-    private int n_trial = 500;
+    private int n_trial = 7;
     private int max_text_length = 10000;
     private double[] priorMap = null;
     private boolean verbose = false;
@@ -166,9 +165,10 @@ public class Detector {
     public void append(String text) {
         text = URL_REGEX.matcher(text).replaceAll(" ");
         text = MAIL_REGEX.matcher(text).replaceAll(" ");
+        text = NGram.normalize_vi(text);
         char pre = 0;
         for (int i = 0; i < text.length() && i < max_text_length; ++i) {
-            char c = NGram.normalize(text.charAt(i));
+            char c = text.charAt(i);
             if (c != ' ' || pre != ' ') this.text.append(c);
             pre = c;
         }
@@ -238,12 +238,10 @@ public class Detector {
 
         Random rand = new Random();
         if (seed != null) rand.setSeed(seed);
-        
-        
-        
         for (int t = 0; t < n_trial; ++t) {
             double[] prob = initProbability();
             double alpha = this.alpha + rand.nextGaussian() * ALPHA_WIDTH;
+
             for (int i = 0;; ++i) {
                 int r = rand.nextInt(ngrams.size());
                 updateLangProb(prob, ngrams.get(r), alpha);
@@ -256,7 +254,7 @@ public class Detector {
             if (verbose) System.out.println("==> " + sortProbability(prob));
         }
     }
-    
+
     /**
      * Initialize the map of language probabilities.
      * If there is the specified prior map, use it as initial map.
@@ -314,7 +312,9 @@ public class Detector {
                 formatter.format(" %s:%.5f", langlist.get(j), p);
             }
         }
-        return formatter.toString();
+        String string = formatter.toString();
+        formatter.close();
+        return string;
     }
     
     /**
@@ -334,7 +334,7 @@ public class Detector {
 
     /**
      * @param probabilities HashMap
-     * @return language candidates order by probabilities descendently
+     * @return lanugage candidates order by probabilities descendently
      */
     private ArrayList<Language> sortProbability(double[] prob) {
         ArrayList<Language> list = new ArrayList<Language>();

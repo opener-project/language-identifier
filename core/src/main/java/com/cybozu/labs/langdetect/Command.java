@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -101,10 +100,8 @@ public class Command {
     /**
      * load profiles
      * @return false if load success
-     * @throws IOException 
-     * @throws URISyntaxException 
      */
-    private boolean loadProfile() throws IOException, URISyntaxException {
+    private boolean loadProfile() {
         String profileDirectory = get("directory") + "/"; 
         try {
             DetectorFactory.loadProfile(profileDirectory);
@@ -208,11 +205,9 @@ public class Command {
      * <pre>
      * usage: --detectlang -d [profile directory] -a [alpha] -s [seed] [test file(s)]
      * </pre>
-     * @throws IOException 
-     * @throws URISyntaxException 
      * 
      */
-    public void detectLang() throws IOException, URISyntaxException {
+    public void detectLang() {
         if (loadProfile()) return;
         for (String filename: arglist) {
             BufferedReader is = null;
@@ -247,11 +242,9 @@ public class Command {
      * <pre>
      *   [correct language name]\t[text body for test]\n
      * </pre>
-     * @throws IOException 
-     * @throws URISyntaxException 
      *  
      */
-    public void batchTest() throws IOException, URISyntaxException {
+    public void batchTest() {
         if (loadProfile()) return;
         HashMap<String, ArrayList<String>> result = new HashMap<String, ArrayList<String>>();
         for (String filename: arglist) {
@@ -319,10 +312,8 @@ public class Command {
     /**
      * Command Line Interface
      * @param args command line arguments
-     * @throws IOException 
-     * @throws URISyntaxException 
      */
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) {
         Command command = new Command();
         command.addOpt("-d", "directory", "./");
         command.addOpt("-a", "alpha", "" + DEFAULT_ALPHA);

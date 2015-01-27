@@ -3,16 +3,10 @@ package com.cybozu.labs.langdetect;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
 
 import net.arnx.jsonic.JSON;
 import net.arnx.jsonic.JSONException;
@@ -43,8 +37,6 @@ public class DetectorFactory {
     public HashMap<String, double[]> wordLangProbMap;
     public ArrayList<String> langlist;
     public Long seed = null;
-    private static final String PROFILE_DIR="/profiles";
-    private static final String PROFILE_DIR_NAME="profiles";
     private DetectorFactory() {
         wordLangProbMap = new HashMap<String, double[]>();
         langlist = new ArrayList<String>();
@@ -60,72 +52,7 @@ public class DetectorFactory {
      *                              or profile's format is wrong (error code = {@link ErrorCode#FormatError})
      */
     public static void loadProfile(String profileDirectory) throws LangDetectException {
-    	loadProfile(new File(profileDirectory));
-    }
-    
-    /**
-     * Load profiles from resources folder.
-     * This method must be called once before language detection.
-     * 
-     * @throws LangDetectException  Can't open profiles(error code = {@link ErrorCode#FileLoadError})
-     *                              or profile's format is wrong (error code = {@link ErrorCode#FormatError})
-     * @throws IOException 
-     */
-    public static void loadProfile() throws LangDetectException, IOException {
-    	
-    	// get profile directory
-    	URL profile = DetectorFactory.class.getClass().getResource(PROFILE_DIR);
-    	File profileDir = new File(profile.getPath());
-    	if (profileDir.isDirectory())
-    		loadProfile(profileDir);
-    	else {
-    		// get the profile files inside jar
-    		List<InputStream> profileStreams = getProfileFilesFromJar();
-	    	loadProfile(profileStreams);
-    	}
-    }
-    
-    /**
-     * Get the profile files from jar file as input streams
-     * @return list of input streams
-     * @throws IOException
-     */
-    private static List<InputStream> getProfileFilesFromJar() throws IOException {
-    	
-    	List<InputStream> profileStreams = new ArrayList<InputStream>();
-    	
-    	// get jar location
-    	CodeSource src = DetectorFactory.class.getProtectionDomain().getCodeSource();
-    	URL jar = src.getLocation();
-    	
-    	// get all files inside far
-    	ZipInputStream zip = new ZipInputStream(jar.openStream());
-    	ZipEntry entry = null;
-    	
-    	while ((entry = zip.getNextEntry()) != null) {
-    		String entryName = entry.getName();
-    		
-    		// if the entry is a profile file
-    		if (isProfileFile(entryName)) {
-    			
-    			// add to the stream list
-    			entryName = "/"+entryName;
-    			InputStream input = DetectorFactory.class.getClass()
-    					.getResourceAsStream(entryName);
-    			profileStreams.add(input);
-    		}
-    	}
-    	return profileStreams;
-    }
-    
-    /**
-     * True if the file is a profile file
-     * @param file
-     * @return
-     */
-    private static boolean isProfileFile(String file) {
-    	return file.startsWith(PROFILE_DIR_NAME)
-				&& file.length() > PROFILE_DIR.length();
+        loadProfile(new File(profileDirectory));
     }
 
     /**
@@ -136,40 +63,8 @@ public class DetectorFactory {
      * @throws LangDetectException  Can't open profiles(error code = {@link ErrorCode#FileLoadError})
      *                              or profile's format is wrong (error code = {@link ErrorCode#FormatError})
      */
-    public static void loadProfile(List<InputStream> profileStreams) throws LangDetectException {
-    	
-        if (profileStreams.size() == 0)
-            throw new LangDetectException(ErrorCode.NeedLoadProfileError, "Not found profile");
-            
-        int langsize = profileStreams.size(), index = 0;
-        for (InputStream is: profileStreams) {
-            try {
-                LangProfile profile = JSON.decode(is, LangProfile.class);
-                addProfile(profile, index, langsize);
-                ++index;
-            } catch (JSONException e) {
-                throw new LangDetectException(ErrorCode.FormatError, "profile format error");
-            } catch (IOException e) {
-                throw new LangDetectException(ErrorCode.FileLoadError, "can't open");
-            } finally {
-                try {
-                    if (is!=null) is.close();
-                } catch (IOException e) {}
-            }
-        }
-    }
-    
-    /**
-     * Load profiles from a list of input streams.
-     * This method must be called once before language detection.
-     *  
-     * @param profileDirectory profile directory path
-     * @throws LangDetectException  Can't open profiles(error code = {@link ErrorCode#FileLoadError})
-     *                              or profile's format is wrong (error code = {@link ErrorCode#FormatError})
-     */
     public static void loadProfile(File profileDirectory) throws LangDetectException {
-    	
-    	File[] listFiles = profileDirectory.listFiles();
+        File[] listFiles = profileDirectory.listFiles();
         if (listFiles == null)
             throw new LangDetectException(ErrorCode.NeedLoadProfileError, "Not found profile: " + profileDirectory);
             
@@ -190,6 +85,31 @@ public class DetectorFactory {
                 try {
                     if (is!=null) is.close();
                 } catch (IOException e) {}
+            }
+        }
+    }
+
+    /**
+     * Load profiles from specified directory.
+     * This method must be called once before language detection.
+     *  
+     * @param profileDirectory profile directory path
+     * @throws LangDetectException  Can't open profiles(error code = {@link ErrorCode#FileLoadError})
+     *                              or profile's format is wrong (error code = {@link ErrorCode#FormatError})
+     */
+    public static void loadProfile(List<String> json_profiles) throws LangDetectException {
+        int index = 0;
+        int langsize = json_profiles.size();
+        if (langsize < 2)
+            throw new LangDetectException(ErrorCode.NeedLoadProfileError, "Need more than 2 profiles");
+            
+        for (String json: json_profiles) {
+            try {
+                LangProfile profile = JSON.decode(json, LangProfile.class);
+                addProfile(profile, index, langsize);
+                ++index;
+            } catch (JSONException e) {
+                throw new LangDetectException(ErrorCode.FormatError, "profile format error");
             }
         }
     }
@@ -219,9 +139,9 @@ public class DetectorFactory {
     }
 
     /**
-     * for only Unit Test
+     * Clear loaded language profiles (reinitialization to be available)
      */
-    static /* package scope */ void clear() {
+    static public void clear() {
         instance_.langlist.clear();
         instance_.wordLangProbMap.clear();
     }
