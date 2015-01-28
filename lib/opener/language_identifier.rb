@@ -1,8 +1,6 @@
-require 'java'
 require 'open3'
 require 'slop'
 require 'builder'
-require 'singleton'
 
 require_relative '../../core/target/LanguageDetection-1.0.0.jar'
 
@@ -47,7 +45,7 @@ module Opener
     #
     def initialize(options = {})
       @options  = DEFAULT_OPTIONS.merge(options)
-      @detector = Detector.instance
+      @detector = Detector.new
     end
 
     ##
