@@ -12,23 +12,23 @@ import java.util.regex.Pattern;
 import com.cybozu.labs.langdetect.util.NGram;
 
 /**
- * {@link Detector} class is to detect language from specified text. 
+ * {@link Detector} class is to detect language from specified text.
  * Its instance is able to be constructed via the factory class {@link DetectorFactory}.
  * <p>
  * After appending a target text to the {@link Detector} instance with {@link #append(Reader)} or {@link #append(String)},
  * the detector provides the language detection results for target text via {@link #detect()} or {@link #getProbabilities()}.
  * {@link #detect()} method returns a single language name which has the highest probability.
  * {@link #getProbabilities()} methods returns a list of multiple languages and their probabilities.
- * <p>  
+ * <p>
  * The detector has some parameters for language detection.
  * See {@link #setAlpha(double)}, {@link #setMaxTextLength(int)} and {@link #setPriorMap(HashMap)}.
- * 
+ *
  * <pre>
  * import java.util.ArrayList;
  * import com.cybozu.labs.langdetect.Detector;
  * import com.cybozu.labs.langdetect.DetectorFactory;
  * import com.cybozu.labs.langdetect.Language;
- * 
+ *
  * class LangDetectSample {
  *     public void init(String profileDirectory) throws LangDetectException {
  *         DetectorFactory.loadProfile(profileDirectory);
@@ -45,11 +45,11 @@ import com.cybozu.labs.langdetect.util.NGram;
  *     }
  * }
  * </pre>
- * 
+ *
  * <ul>
  * <li>4x faster improvement based on Elmer Garduno's code. Thanks!</li>
  * </ul>
- * 
+ *
  * @author Nakatani Shuyo
  * @see DetectorFactory
  */
@@ -65,7 +65,7 @@ public class Detector {
 
     private static final Pattern URL_REGEX = Pattern.compile("https?://[-_.?&~;+=/#0-9A-Za-z]{1,2076}");
     private static final Pattern MAIL_REGEX = Pattern.compile("[-_.0-9A-Za-z]{1,64}@[-_0-9A-Za-z]{1,255}[-_.0-9A-Za-z]{1,255}");
-    
+
     private final HashMap<String, double[]> wordLangProbMap;
     private final ArrayList<String> langlist;
 
@@ -110,7 +110,7 @@ public class Detector {
     /**
      * Set prior information about language probabilities.
      * @param priorMap the priorMap to set
-     * @throws LangDetectException 
+     * @throws LangDetectException
      */
     public void setPriorMap(HashMap<String, Double> priorMap) throws LangDetectException {
         this.priorMap = new double[langlist.size()];
@@ -127,7 +127,7 @@ public class Detector {
         if (sump<=0) throw new LangDetectException(ErrorCode.InitParamError, "More one of prior probability must be non-zero.");
         for (int i=0;i<this.priorMap.length;++i) this.priorMap[i] /= sump;
     }
-    
+
     /**
      * Specify max size of target text to use for language detection.
      * The default value is 10000(10KB).
@@ -137,13 +137,13 @@ public class Detector {
         this.max_text_length = max_text_length;
     }
 
-    
+
     /**
      * Append the target text for language detection.
      * This method read the text from specified input reader.
      * If the total size of target text exceeds the limit size specified by {@link Detector#setMaxTextLength(int)},
      * the rest is cut down.
-     * 
+     *
      * @param reader the input reader (BufferedReader as usual)
      * @throws IOException Can't read the reader.
      */
@@ -159,7 +159,7 @@ public class Detector {
      * Append the target text for language detection.
      * If the total size of target text exceeds the limit size specified by {@link Detector#setMaxTextLength(int)},
      * the rest is cut down.
-     * 
+     *
      * @param text the target text to append
      */
     public void append(String text) {
@@ -202,7 +202,7 @@ public class Detector {
     /**
      * Detect language of the target text and return the language name which has the highest probability.
      * @return detected language name which has most probability.
-     * @throws LangDetectException 
+     * @throws LangDetectException
      *  code = ErrorCode.CantDetectError : Can't detect because of no valid features in text
      */
     public String detect() throws LangDetectException {
@@ -214,7 +214,7 @@ public class Detector {
     /**
      * Get language candidates which have high probabilities
      * @return possible languages list (whose probabilities are over PROB_THRESHOLD, ordered by probabilities descendently
-     * @throws LangDetectException 
+     * @throws LangDetectException
      *  code = ErrorCode.CantDetectError : Can't detect because of no valid features in text
      */
     public ArrayList<Language> getProbabilities() throws LangDetectException {
@@ -223,17 +223,17 @@ public class Detector {
         ArrayList<Language> list = sortProbability(langprob);
         return list;
     }
-    
+
     /**
-     * @throws LangDetectException 
-     * 
+     * @throws LangDetectException
+     *
      */
     private void detectBlock() throws LangDetectException {
         cleaningText();
         ArrayList<String> ngrams = extractNGrams();
         if (ngrams.size()==0)
             throw new LangDetectException(ErrorCode.CantDetectError, "no features in text");
-        
+
         langprob = new double[langlist.size()];
 
         Random rand = new Random();
@@ -316,7 +316,7 @@ public class Detector {
         formatter.close();
         return string;
     }
-    
+
     /**
      * normalize probabilities and check convergence by the maximun probability
      * @return maximum of probabilities
