@@ -48,7 +48,11 @@ module Opener
         'it' => 0.9,
         'fr' => 0.9,
         'de' => 0.9,
-        'nl' => 0.9
+        'nl' => 0.9,
+
+        # These languages are disabled (for the time being) due to conflicting
+        # with other (OpeNER) languages too often.
+        'af' => 0.0, # conflicts with Dutch
       }
 
       ##
