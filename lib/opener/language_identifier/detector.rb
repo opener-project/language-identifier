@@ -82,6 +82,12 @@ module Opener
       #
       def detect(input)
         return new_detector(input).detect
+
+      # The core Java code raise an exception when it can't detect a language.
+      # Since this isn't actually something fatal we'll capture this and return
+      # "unknown" instead.
+      rescue com.cybozu.labs.langdetect.LangDetectException
+        return 'unknown'
       end
 
       ##

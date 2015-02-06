@@ -35,6 +35,10 @@ describe Opener::LanguageIdentifier do
     example 'return the code for an English text' do
       described_class.new(:kaf => false).run(@input).should == 'en'
     end
+
+    example 'return "unknown" when a language could not be detected' do
+      described_class.new(:kaf => false).run('123').should == 'unknown'
+    end
   end
 
   context 'KAF output' do
