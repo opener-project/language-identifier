@@ -69,7 +69,7 @@ Example:
               :probs => enable_probs
             )
 
-            input = STDIN.tty? ? nil : STDIN.read
+            input = ARGF.read
 
             puts identifier.run(input)
           end
