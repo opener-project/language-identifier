@@ -27,7 +27,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency 'newrelic_rpm', '~> 3.0'
 
-  gem.add_dependency 'opener-daemons', '~> 2.2'
+  gem.add_dependency 'opener-daemons', ['~> 2.5', '>= 2.5.6']
   gem.add_dependency 'opener-webservice', '~> 2.1'
 
   gem.add_dependency 'builder'
