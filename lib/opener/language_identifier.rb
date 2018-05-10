@@ -7,7 +7,9 @@ require_relative '../../core/target/LanguageDetection-1.0.0.jar'
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
 require_relative 'language_identifier/cli'
-require_relative 'language_identifier/detector.rb'
+require_relative 'language_identifier/detector'
+require_relative 'language_identifier/backend/language_detection'
+require_relative 'language_identifier/backend/opennlp'
 
 module Opener
   ##
