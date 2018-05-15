@@ -6,7 +6,6 @@ The CLI takes the following options:
 
     -v, --version      Shows the current version
         --no-kaf       Disables KAF output
-    -p, --probs        Displays probabilities instead of a language code
     -h, --help         Display this help message.
 
 #### Examples:
@@ -23,10 +22,6 @@ The CLI takes the following options:
     <KAF xml:lang="en" version="2.1">
         <raw>This is english text.</raw>
     </KAF>
-
-##### Output Probabilities
-
-    echo "This is een mix van Nederlandse and English text" | language-identifier --probs    # output probabilities            [nl:0.8579977424996601, en:0.14200189400782184]
 
 ### Webservice
 

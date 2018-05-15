@@ -10,12 +10,9 @@ module Opener
       # @param [Hash] options
       #
       #
-      def initialize(options = {})
-        options.each do |key, value|
-          instance_variable_set("@#{key}", value) if respond_to?(key)
-        end
-
-        @backend = Backend::LanguageDetection.new
+      def initialize
+        #@backend = Backend::LanguageDetection.new
+        @backend = Backend::Opennlp.new
       end
 
       ##
@@ -25,13 +22,6 @@ module Opener
         @backend.detect input
       end
 
-      ##
-      # @return [Array]
-      #
-      def probabilities(input)
-        @backend.new_detector(input).get_probabilities.to_array
-      end
-
-    end # Detector
-  end # LanguageIdentifier
-end # Opener
+    end
+  end
+end

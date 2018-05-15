@@ -1,8 +1,12 @@
 require 'open3'
 require 'slop'
 require 'builder'
+require 'pp'
+
+require 'iso639'
 
 require_relative '../../core/target/LanguageDetection-1.0.0.jar'
+require_relative '../../core/target/opennlp/opennlp-tools-1.8.4.jar'
 
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
@@ -28,9 +32,8 @@ module Opener
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
-      :args  => [],
-      :kaf   => true,
-      :probs => false
+      args:  [],
+      kaf:   true,
     }.freeze
 
     ##
@@ -41,9 +44,6 @@ module Opener
     #
     # @option options [TrueClass|FalseClass] :kaf When set to `true` the
     #  results will be displayed as KAF.
-    #
-    # @option options [TrueClass|FalseClass] :probs Wen set the probabilities
-    #  are returned instead of the language/KAF.
     #
     def initialize(options = {})
       @options  = DEFAULT_OPTIONS.merge(options)
@@ -58,12 +58,8 @@ module Opener
     # @return [Array]
     #
     def run(input)
-      if options[:probs]
-        output = @detector.probabilities(input)
-      else
-        output = @detector.detect(input)
-        output = build_kaf(input, output) if options[:kaf]
-      end
+      output = @detector.detect(input)
+      output = build_kaf(input, output) if options[:kaf]
 
       return output
     end

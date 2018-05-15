@@ -48,25 +48,18 @@ Example:
           end
 
           on :'no-kaf', 'Disables KAF output'
-          on :p, :probs, 'Displays probabilities instead of a language code'
 
           run do |opts, args|
             enable_kaf   = true
-            enable_probs = false
 
             if opts[:'no-kaf']
               enable_kaf = false
             end
 
-            if opts[:probs]
-              enable_kf    = false
-              enable_probs = true
-            end
-
             identifier = LanguageIdentifier.new(
-              :args  => args,
-              :kaf   => enable_kaf,
-              :probs => enable_probs
+              args:  args,
+              kaf:   enable_kaf,
+              probs: false,
             )
 
             input = STDIN.tty? ? nil : STDIN.read

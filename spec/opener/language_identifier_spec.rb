@@ -13,24 +13,6 @@ describe Opener::LanguageIdentifier do
     end
   end
 
-  context 'probabilities' do
-    before do
-      @probs = described_class.new(:probs => true).run(@input)
-    end
-
-    example 'return the probabilities' do
-      @probs.empty?.should == false
-    end
-
-    example 'return the language of the first probability' do
-      @probs[0].lang.should == 'en'
-    end
-
-    example 'return the probability score' do
-      @probs[0].prob.should > 0
-    end
-  end
-
   context 'text output' do
     example 'return the code for an English text' do
       described_class.new(:kaf => false).run(@input).should == 'en'
