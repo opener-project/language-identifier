@@ -123,11 +123,13 @@ module Opener
           language = @detector.predictLanguage input
           return 'unknown' unless language
 
-          pp language.getLang
           code     = ISOCODE_MAP[language.getLang.to_sym]
           return 'unknown' unless code
 
           code.to_s
+
+        rescue
+          return 'unknown'
         end
 
 
