@@ -3,17 +3,22 @@ require 'slop'
 require 'builder'
 require 'pp'
 
-require 'iso639'
+require 'detect_language'
 
-require_relative '../../core/target/LanguageDetection-1.0.0.jar'
-require_relative '../../core/target/opennlp/opennlp-tools-1.8.4.jar'
+if RUBY_ENGINE == 'jruby'
+  require_relative '../../core/target/LanguageDetection-1.0.0.jar'
+  require_relative '../../core/target/opennlp/opennlp-tools-1.8.4.jar'
+end
 
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
 require_relative 'language_identifier/cli'
 require_relative 'language_identifier/detector'
-require_relative 'language_identifier/backend/language_detection'
-require_relative 'language_identifier/backend/opennlp'
+require_relative 'language_identifier/backend/detect_language_com'
+if RUBY_ENGINE == 'jruby'
+  require_relative 'language_identifier/backend/language_detection'
+  require_relative 'language_identifier/backend/opennlp'
+end
 
 module Opener
   ##

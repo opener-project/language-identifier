@@ -12,7 +12,8 @@ module Opener
       #
       def initialize
         #@backend = Backend::LanguageDetection.new
-        @backend = Backend::Opennlp.new
+        #@backend = Backend::Opennlp.new
+        @backend = Backend::DetectLanguageCom.new
       end
 
       ##

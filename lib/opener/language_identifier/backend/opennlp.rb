@@ -132,7 +132,6 @@ module Opener
           return 'unknown'
         end
 
-
       end
     end
   end
