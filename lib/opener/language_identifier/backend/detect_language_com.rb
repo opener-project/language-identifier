@@ -45,7 +45,7 @@ module Opener
 
           code
 
-        rescue Net::HTTPRequestTimeOut
+        rescue
           retry
         end
 
