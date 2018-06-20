@@ -6,14 +6,17 @@ module Opener
     # assigning priorities to languages, etc.
     #
     class Detector
+
+      attr_reader :backend
+
       ##
       # @param [Hash] options
       #
       #
-      def initialize
-        @backend = Backend::LanguageDetection.new
-        #@backend = Backend::Opennlp.new
-        #@backend = Backend::DetectLanguageCom.new
+      def initialize backend = nil
+        klass    = Backend.const_get backend.to_s.camelize.to_sym if backend
+        klass  ||= LanguageDetection
+        @backend = klass.new
       end
 
       ##

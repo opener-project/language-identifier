@@ -7,7 +7,7 @@ module Opener
 
         MODEL_FILE  = File.expand_path '../../../../core/target/opennlp/langdetect-183.bin', File.dirname(__FILE__)
         ISOCODE_MAP = {
-          afr: :af,
+          afr: :nl,
           ara: :ar,
           aze: :az,
           bak: :ba,
@@ -19,8 +19,8 @@ module Opener
           cat: :ca,
           ces: :cs,
           che: :ce,
-          cmn: :zh,
-          nan: :zh,
+          cmn: :'zh-ch',
+          nan: :'zh-ch',
           cym: :cy,
           dan: :da,
           deu: :de,
@@ -71,7 +71,7 @@ module Opener
           nep: :ne,
           nld: :nl,
           nno: :nn,
-          nob: :nb,
+          nob: :no,
           oci: :oc,
           pan: :pa,
           pnb: :pa,
