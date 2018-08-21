@@ -15,7 +15,7 @@ module Opener
       #
       def initialize backend = nil, fallback = nil
         klass     = Backend.const_get backend.to_sym if backend
-        klass   ||= LanguageDetection
+        klass   ||= Backend::LanguageDetection
         @backend  = klass.new
 
         klass     = Backend.const_get fallback.to_sym if fallback
