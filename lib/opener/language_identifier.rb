@@ -52,7 +52,7 @@ module Opener
     #
     def initialize(options = {})
       @options  = DEFAULT_OPTIONS.merge(options)
-      @detector = Detector.new
+      @detector = Detector.new ENV['BACKEND'], ENV['FALLBACK']
     end
 
     ##

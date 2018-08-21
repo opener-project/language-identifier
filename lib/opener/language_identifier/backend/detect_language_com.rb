@@ -25,7 +25,8 @@ module Opener
           syr: nil,
           tlh: nil,
           war: :tl,
-          'zh-Hant': :'zh-ch',
+          zh:  :'zh-cn',
+          'zh-Hant': :'zh-cn',
         }
 
         def initialize
