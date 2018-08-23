@@ -1,3 +1,7 @@
+if ENV.values_at('BACKEND', 'FALLBACK').include? 'Opennlp'
+  require_relative '../../../../core/target/opennlp/opennlp-tools-1.8.4.jar'
+end
+
 module Opener
   class LanguageIdentifier
     module Backend

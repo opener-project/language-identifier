@@ -5,11 +5,6 @@ require 'pp'
 
 require 'detect_language'
 
-if RUBY_ENGINE == 'jruby'
-  require_relative '../../core/target/LanguageDetection-1.0.0.jar'
-  require_relative '../../core/target/opennlp/opennlp-tools-1.8.4.jar'
-end
-
 require_relative 'language_identifier/version'
 require_relative 'language_identifier/kaf_builder'
 require_relative 'language_identifier/cli'

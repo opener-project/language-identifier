@@ -1,15 +1,17 @@
-.DS_Store
-.idea/
-pkg/
 Gemfile.lock
-*.swp
-*~
+*.gem
+
+pkg/
 .rvmrc
 *.so
-tmp/*
-Gemfile.lock
 
 core/target
 core/dependency-reduced-pom.xml
 
 !.gitkeep
+
+tmp/*
+*.swp
+*~
+.DS_Store
+.idea/

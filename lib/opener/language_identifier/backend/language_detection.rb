@@ -1,3 +1,5 @@
+require_relative '../../../../core/target/LanguageDetection-1.0.0.jar'
+
 module Opener
   class LanguageIdentifier
     module Backend
