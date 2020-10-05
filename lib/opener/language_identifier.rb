@@ -57,9 +57,9 @@ module Opener
     # @param [String] input The text of which to detect the language.
     # @return [Array]
     #
-    def run(input)
-      output = @detector.detect(input)
-      output = build_kaf(input, output) if options[:kaf]
+    def run input, params = {}
+      output = @detector.detect input
+      output = build_kaf input, output if options[:kaf]
 
       return output
     end
