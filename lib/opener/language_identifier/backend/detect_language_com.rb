@@ -33,6 +33,8 @@ module Opener
           DetectLanguage.configure do |config|
             config.secure  = true
             config.api_key = ENV['DETECT_LANGUAGE_TOKEN']
+            config.http_read_timeout = 300
+            config.http_open_timeout = 300
             raise 'no detectlanguage token specified' if config.api_key.nil?
           end
         end
