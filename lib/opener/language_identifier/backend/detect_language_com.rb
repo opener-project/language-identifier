@@ -27,6 +27,7 @@ module Opener
           war: :tl,
           zh:  :'zh-cn',
           'zh-Hant': :'zh-cn',
+          'zh-tw':   :'zh-cn',
         }
 
         def initialize
