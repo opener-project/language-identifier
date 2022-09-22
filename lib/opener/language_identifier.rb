@@ -58,10 +58,10 @@ module Opener
     # @return [Array]
     #
     def run input, params = {}
-      output = @detector.detect input
-      output = build_kaf input, output if options[:kaf]
-
-      return output
+      lang   = params[:language] # already provided, skip detection
+      lang ||= @detector.detect input
+      lang = build_kaf input, lang if options[:kaf]
+      lang
     end
 
     alias identify run

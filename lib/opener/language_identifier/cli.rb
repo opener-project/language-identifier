@@ -62,9 +62,10 @@ Example:
               probs: false,
             )
 
-            input = STDIN.tty? ? nil : STDIN.read
-
-            puts identifier.run(input)
+            params = JSON.parse(ENV['PARAMS']).transform_keys!(&:to_sym) rescue {}
+            input  = STDIN.tty? ? nil : STDIN.read
+            output = identifier.run input, params
+            puts output
           end
         end
       end
