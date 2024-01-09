@@ -49,7 +49,8 @@ module Opener
 
           code
 
-        rescue
+        rescue => e
+          puts "detect_language: retrying on #{e.class}: #{e.message}"
           retry
         end
 
